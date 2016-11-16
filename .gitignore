@@ -1,3 +1,2 @@
-/rime/*/*.pyc
-/rime/*/*/*.pyc
-/*/rime-out/
+*.pyc
+rime-out/
