@@ -8,5 +8,5 @@
 problem(title = "NMPuzzle",
         id = "Z",
         reference_solution = 'yurahuna_cpp_AC',
-        time_limit = 1.0,
+        time_limit = 2.0,
         )

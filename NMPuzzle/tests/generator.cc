@@ -21,7 +21,7 @@ void output(int N, int M, int K, const string &prefix, int num){
 
 // 制約に沿ってKの最大値を返す
 int maxK(int N, int M) {
-    return M*N*(N-1)/2 + N*M*(N-1)/2;
+    return N * M * (M-1)/2 + M * N * (N-1)/2;
 }
 
 int main(){

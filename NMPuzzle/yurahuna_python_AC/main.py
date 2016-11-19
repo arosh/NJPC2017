@@ -1,3 +1,6 @@
+#!/usr/bin/env
+# -*- coding: utf-8 -*-
+
 import sys
 
 def check():
@@ -6,7 +9,8 @@ def check():
         if flag_rev:
             a = [[a[i][j] for i in range(N)] for j in range(M)]
         for l in a:
-            print(*l)
+            # print(*l)
+            print *l
         sys.exit()
 
 N, M, K = map(int, input().split())
@@ -26,7 +30,7 @@ for i in range(N):
             check()
 
 a = [[i * M + j + 1 for j in range(M)[::-1]] for i in range(N)[::-1]]
-cnt = N * M * (M-1)//2 + M * N * (N-1)//2
+cnt = N * M * (M-1)//2 + M * N * (N-1)//2;
 check()
 for i in range(N):
     for k in range(1, M)[::-1]:

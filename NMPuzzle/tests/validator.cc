@@ -1,14 +1,15 @@
-/*
 #include "./testlib.h"
 #include "./constraints.hpp"
 #include <cassert>
 
 int main(){
     registerValidation();
-    inf.readInt(MIN_A, MAX_A);
+    // yurahunaがテスト用に書いたものです
+    inf.readInt();
     inf.readSpace();
-    inf.readInt(MIN_B, MAX_B);
+    inf.readInt();
+    inf.readSpace();
+    inf.readInt();
     inf.readEoln();
     inf.readEof();
 }
-*/

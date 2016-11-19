@@ -1,4 +1,6 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+
 using namespace std;
 
 #define rep(i,n) for (int i=0;i<(n);i++)
@@ -77,7 +79,7 @@ signed main() {
 		// 最大ケースから
 		int t = N * M;
 		rep(i, N) rep(j, M) a[i][j] = t--;
-		int cnt = N * M * (M - 1) / 2;
+		int cnt = N * M * (M-1)/2 + M * N * (N-1)/2;
 		if (cnt == K) {
 			output(a, flag_rev);
 			return 0;
