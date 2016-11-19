@@ -29,17 +29,10 @@ vector<vector<int> > readIntTable(InStream& in, TResult pe, int n, int m) {
 
 int main(int argc, char * argv[])
 {
-
     setName("check if the score of participant's answer is exactly K");
 
     // registerTestlibCmd(argc, argv);
     // 引数の順番やら何やらが違うので以下を使う
-
-    cout << argc << endl;
-    rep(i, argc) {
-        cout << argv[i] << endl;
-    }
-
     inf.init(argv[2], _input);
     ans.init(argv[4], _answer);
     ouf.init(argv[6], _output);
