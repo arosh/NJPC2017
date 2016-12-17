@@ -1,14 +1,12 @@
-/*
 #include "./testlib.h"
 #include "./constraints.hpp"
-#include <cassert>
+#include <cstdio>
 
 int main(){
     registerValidation();
-    inf.readInt(MIN_A, MAX_A);
-    inf.readSpace();
-    inf.readInt(MIN_B, MAX_B);
+    char re[100];
+    sprintf(re,"[a-z]{%d,%d}",MIN_L,MAX_L);
+    inf.readToken(re,"s");
     inf.readEoln();
     inf.readEof();
 }
-*/

@@ -1,6 +1,6 @@
-/*
-#define MIN_A 1
-#define MAX_A 1000
-#define MIN_B 1
-#define MAX_B 1000
-*/
+#define MIN_N 1 
+#define MAX_N (1e5)
+#define MIN_Ti 1
+#define MAX_Ti (1e9)
+#define MIN_Xi (-(1e6))
+#define MAX_Xi (1e6)
