@@ -2,11 +2,14 @@
 #include <stdio.h>
 #include <iostream>
 #include <vector>
+#include <map>
 
 using namespace std;
 
 #define rep(i, n) for (int i = 0; i < int(n); i++)
 #define rep2(i, a, b) for (int i = int(a); i < int(b); i++)
+#define rrep(i,n) for (int i=(n)-1;i>=0;i--)
+#define rrep2(i,a,b) for (int i=(a)-1;i>=b;i--)
 
 vector<vector<int> > readIntTable(InStream& in, TResult pe, int n, int m) {
     vector<vector<int> > ret(n, vector<int>(m));
@@ -23,7 +26,39 @@ vector<vector<int> > readIntTable(InStream& in, TResult pe, int n, int m) {
     return ret;
 }
 
-// O(N^3)実装
+class Bit {
+private:
+    vector<int> bit;
+    const int n;
+
+public:
+    Bit(int _n) : n(_n), bit(_n + 1, 0) {}
+
+    // get sum in [1, i]
+    // sum{[i, j]} = sum{[1, j]} - sum{[1, i-1]}
+    int sum(int i) {
+        int s = 0;
+        while (i > 0) {
+            s += bit[i];
+            i -= i & -i;
+        }
+        return s;
+    }
+
+    int sum(int l, int r) {
+        return sum(r) - sum(l - 1);
+    }
+
+    // add x to bit[i]
+    void add(int i, int x) {
+        while (i <= n) {
+            bit[i] += x;
+            i += i & -i;
+        }
+    }
+};
+
+// O(N^2logN) BIT ver.
 int main(int argc, char * argv[])
 {
     setName("check if the score of participant's answer is exactly K");
@@ -62,12 +97,21 @@ int main(int argc, char * argv[])
     rep(t, 2) {
         // 各行の転倒数の和をとる
         rep(i, N) {
+            Bit bit(M);
+            map<int, int> mp;
             rep(j, M) {
-                rep2(k, j + 1, M) {
-                    if (a[i][j] > a[i][k]) {
-                        score++;
-                    }
-                }
+                mp[a[i][j]] = 0;
+            }
+            int num = 1;
+            for (auto& p : mp) {
+                p.second = num++;
+            }
+
+            // 右から処理
+            rrep(j, M) {
+                int x = mp[a[i][j]];
+                score += bit.sum(x);
+                bit.add(x, 1);
             }
         }
 
