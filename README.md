@@ -8,7 +8,7 @@
 - [NMパズルの2次元転倒数](https://docs.google.com/document/d/1xLL57jtmqnaa3h1QmdB08RqXOK0JcnWHzBq_bdagW1Y)
 - [All roads lead to Rome](https://docs.google.com/document/d/1mrxwh-f7gjtzZFPbpYradis1OwmLfjL6FoiTArFXTZo/edit)
 <!-- - [たまおとし](https://docs.google.com/document/d/14IeDmlPpoXcj3mkVPUahnPtUSUaQZimfx1-XKqB4Pq8/edit) -->
-- [ダブルス](https://docs.google.com/document/d/1xZv6jrvi_fVZ073w0MvVKNBjqhQYDQZyipjwij9wkTA/edit#)
+- [ダブルス](https://docs.google.com/document/d/1yAux1E_mpJnIsyM7pjLy69To_zbMC8FsdsxNE1epxuM/edit)
 - [交換法則](https://docs.google.com/document/d/1fLvT7PQsSaI0lWat-hBdK7zxfDtq_XIXKIornBl8NS4/edit)
 - [白黒ツリー](https://docs.google.com/document/d/1xZv6jrvi_fVZ073w0MvVKNBjqhQYDQZyipjwij9wkTA/edit)
 
