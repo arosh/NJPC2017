@@ -1,47 +1,70 @@
-/*
-#include <iostream>
-#include <utility>
+#include <bits/stdc++.h>
+
 #include "./testlib.h"
 #include "./constraints.hpp"
-#include <sys/types.h>
-#include <unistd.h>
 
 using namespace std;
 
-#define rep(i,n) for(int i=0;i<(int)(n);i++)
+random_t rng;
 
-// aとbをファイルストリームに出力する
-// ファイル名は prefix_num.in (ex: 00_sample_00.in)
-void output(int a, int b, const string &prefix, int num){
-    char name[100];
-    sprintf(name, "%s_%02d.in", prefix.c_str(), num);
-    ofstream ofs(name);
-    ofs << a << " " << b << endl;
-    ofs.close();
+struct FileName
+{
+	const int id;
+	const string name;
+	int done = 0;
+
+	FileName( const int id, const string name ) :
+		id( id ), name( name )
+	{
+		return;
+	}
+
+	string operator()()
+	{
+		ostringstream oss;
+		oss << setfill( '0' ) << setw( 2 ) << id << '_' << name << '_' << setw( 2 ) << done++ << ".in";
+		return move( oss.str() );
+	}
+};
+
+void gen_random( ostream & out,
+		const int min_n = MIN_N, const int max_n = MAX_N,
+		const int min_d = MIN_D, const int max_d = MAX_D,
+		const int min_c = MIN_C, const int max_c = MAX_C )
+{
+	const int N = rng.next( min_n, max_n );
+	const int D = rng.next( min_d, max_d );
+
+	out << N << ' ' << D << '\n';
+
+	for ( int i = 1; i < N; ++i )
+	{
+		int u = i, v = rng.next( 0, i - 1 );
+		if ( rng.next( 0, 1 ) )
+		{
+			swap( u, v );
+		}
+
+		const int c = rng.next( min_c, max_c );
+		out << u + 1 << ' ' << v + 1 << ' ' << c << '\n';
+	}
+	out << flush;
+
+	return;
 }
 
-int main(){
-    // 乱数のシードを設定
-    // pidを足すことで、1秒以上間を置かずに起動したときに同じシードになってしまうのを防ぐ
-    rnd.setSeed(time(0)+getpid());
+int main()
+{
+	rng.setSeed( 711 );
 
-    // 乱数ケースを10個生成
-    for(int i = 0; i < 10; ++i){
-        int A = rnd.next(MIN_A, MAX_A);
-        int B = rnd.next(MIN_B, MAX_B);
-        output(A, B, "50_random", i);
-    }
+	{ // random
+		FileName fname( 1, "random" );
+		for ( int i = 0; i < 10; ++i )
+		{
+			ofstream out( fname() );
+			gen_random( out );
+		}
+	}
 
-    // 片方が大きいケースを生成
-    for(int i = 0; i < 10; ++i){
-        int A = 1;
-        int B = 1;
-        while(0.5*A <= B && B <= 1.5*A){
-            A = rnd.next(MIN_A, MAX_A);
-            B = rnd.next(MIN_B, MAX_B);
-        }
-        if(rnd.next(0,1)) swap(A, B);
-        output(A, B, "60_unbalance", i);
-    }
+	return 0;
 }
-*/
