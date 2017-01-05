@@ -19,12 +19,13 @@ int main() {
     int p = 0;
     int l = x[0];
     for(; i < N - 1; i++) {
-        if (x[i + 1] - l < L) {
-            continue;
-        }
-        else if (x[i + 1] > max(x[i] + L, p + 2 * L)) {
+        // cerr << i << ", " << p << ", " << l << endl;
+        if (x[i + 1] >= max(x[i] + L, p + 2 * L)) {
             p = max(x[i] + L, p + 2 * L);
             l = x[i + 1];
+        }
+        else if (x[i + 1] - l <= L) {
+            continue;
         }
         else {
             break;
