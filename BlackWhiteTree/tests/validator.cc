@@ -11,7 +11,7 @@ private:
 	vector<vector<int> > elmList;	//don't be validated
 public:
 	int groups;
-	
+
 	UF(int __size):par(__size) , rank(__size,0) , elm(__size,1) , groups(__size), elmList(__size){
 		for(int i=0;i<__size;i++)elmList[i] = vector<int>(1,i);
 		for(int i=0;i<__size;i++)par[i]=i;
@@ -24,18 +24,18 @@ public:
 			return par[x]=find(par[x]);
 		}
 	}
-	
+
 	void unite(int x,int y){
 		x=find(x);
 		y=find(y);
 		if(x==y) return;
-		
+
 		groups--;
 		if(rank[x]<rank[y]){
 			par[x]=y;
 			elm[y]+=elm[x];
 			for(auto &e:elmList[x])elmList[y].push_back(e);
-			
+
 		}else{
 			par[y]=x;
 			elm[x]+=elm[y];
@@ -43,7 +43,7 @@ public:
 			if(rank[x]==rank[y])rank[x]++;
 		}
 	}
-	
+
 };
 
 
@@ -53,7 +53,8 @@ int main(){
 	UF uf(N);
 	inf.readEoln();
 	for(int i=2;i<=N;i++){
-		int p = inf.readInt(MIN_Pi,MAX_Pi);
+		// int p = inf.readInt(MIN_Pi,MAX_Pi);
+		int p = inf.readInt(1, N);
 		inf.readEoln();
 		uf.unite(p-1,i-1);
 	}
