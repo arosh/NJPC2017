@@ -36,7 +36,7 @@ int main(int argc, char *argv[]) {
   for(int i = 0; i < 20; i++) {
     rnd.setSeed(16 + i);
     const int L = rnd.next(MIN_L, MAX_L);
-    const string S = rnd.next("[a-z]{%d}", L);
+    const string S = rnd.next("[a-z]{%d}", rnd.next(MIN_L, MAX_L));
     Write(fileName(), L, S);
   }
 }

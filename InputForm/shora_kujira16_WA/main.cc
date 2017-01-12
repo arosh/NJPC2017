@@ -6,5 +6,5 @@ using namespace std;
 int main() {
   int L; string S;
   cin >> L >> S;
-  cout << S.substr(0, min<int>(L, S.size())) << endl;
+  cout << S << endl;
 }
