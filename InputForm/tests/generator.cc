@@ -1,47 +1,42 @@
-/*
-#include <iostream>
-#include <utility>
-#include "./testlib.h"
 #include "./constraints.hpp"
-#include <sys/types.h>
-#include <unistd.h>
+#include "./testlib.h"
+#include <iomanip>
+#include <iostream>
+#include <sstream>
 
 using namespace std;
 
-#define rep(i,n) for(int i=0;i<(int)(n);i++)
+struct FileName {
+  const int id;
+  const string name;
+  int done = 0;
 
-// aとbをファイルストリームに出力する
-// ファイル名は prefix_num.in (ex: 00_sample_00.in)
-void output(int a, int b, const string &prefix, int num){
-    char name[100];
-    sprintf(name, "%s_%02d.in", prefix.c_str(), num);
-    ofstream ofs(name);
-    ofs << a << " " << b << endl;
-    ofs.close();
+  FileName(const int id, const string name) : id(id), name(name) {
+    return;
+  }
+
+  string operator()() {
+    ostringstream oss;
+    oss << std::setfill('0') << setw(2) << id << '_' << name << '_' << setw(2) << done << ".in";
+    done++;
+    return oss.str();
+  }
+};
+
+void Write(const string &name, const int L, const string &S) {
+  ofstream fs(name);
+  fs << L << endl;
+  fs << S << endl;
 }
 
-int main(){
-    // 乱数のシードを設定
-    // pidを足すことで、1秒以上間を置かずに起動したときに同じシードになってしまうのを防ぐ
-    rnd.setSeed(time(0)+getpid());
-
-    // 乱数ケースを10個生成
-    for(int i = 0; i < 10; ++i){
-        int A = rnd.next(MIN_A, MAX_A);
-        int B = rnd.next(MIN_B, MAX_B);
-        output(A, B, "50_random", i);
-    }
-
-    // 片方が大きいケースを生成
-    for(int i = 0; i < 10; ++i){
-        int A = 1;
-        int B = 1;
-        while(0.5*A <= B && B <= 1.5*A){
-            A = rnd.next(MIN_A, MAX_A);
-            B = rnd.next(MIN_B, MAX_B);
-        }
-        if(rnd.next(0,1)) swap(A, B);
-        output(A, B, "60_unbalance", i);
-    }
+int main(int argc, char *argv[]) {
+  // Use registerGen(argc, argv, 1) to develop new generator
+  registerGen(argc, argv, 1);
+  FileName fileName(50, "random");
+  for(int i = 0; i < 20; i++) {
+    rnd.setSeed(16 + i);
+    const int L = rnd.next(MIN_L, MAX_L);
+    const string S = rnd.next("[a-z]{%d}", L);
+    Write(fileName(), L, S);
+  }
 }
-*/
