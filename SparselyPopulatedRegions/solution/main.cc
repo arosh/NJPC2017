@@ -1,4 +1,6 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <algorithm>
 using namespace std;
 
 #define rep(i,n) for (int i=0;i<(n);i++)
@@ -21,14 +23,7 @@ inline void output(const First& first, const Rest&... rest) {
     cout << first << " "; output(rest...);
 }
 
-using ll = long long;
-using Pii = pair<int, int>;
-using TUPLE = tuple<int, int, int>;
-using vi = vector<int>;
-using vvi = vector<vi>;
-using vvvi = vector<vvi>;
 const int inf = 1e9;
-const int mod = 1e9 + 7;
 
 struct edge {
     int to, cost, reversed;
