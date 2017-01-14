@@ -92,6 +92,37 @@ void gen_path( ostream &out, const int min_n = MIN_N, const int max_n = MAX_N )
 	return;
 }
 
+void gen_uni( ostream &out,
+		const int min_n = MIN_N, const int max_n = MAX_N,
+		const int min_c = MIN_C, const int max_c = MAX_C )
+{
+	const int N = rng.next( min_n, max_n );
+	const int D = ( N - 1 ) * max_c;
+
+	const int center = rng.next( 0, N );
+
+	out << N << ' ' << D << '\n';
+	for ( int i = 0; i < N; ++i )
+	{
+		if ( i == center )
+		{
+			continue;
+		}
+
+		int u = i, v = center;
+		if ( rng.next( 0, 1 ) )
+		{
+			swap( u, v );
+		}
+
+		out << u + 1 << ' ' << v + 1 << ' ' << rng.next( min_c, max_c ) << '\n';
+	}
+
+	out << flush;
+
+	return;
+}
+
 int main()
 {
 	rng.setSeed( 711 );
@@ -111,6 +142,15 @@ int main()
 		{
 			ofstream out( fname() );
 			gen_random( out );
+		}
+	}
+
+	{ // path
+		FileName fname( 3, "uni" );
+		for ( int i = 0; i < 15; ++i )
+		{
+			ofstream out( fname() );
+			gen_uni( out );
 		}
 	}
 
