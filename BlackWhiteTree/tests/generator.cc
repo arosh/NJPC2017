@@ -160,7 +160,7 @@ int main(){
     //     output(A, B, "60_unbalance", i);
     // }
 
-    // path (0 - 1 - 2 - ... - (N-1))
+    // graph_path (0 - 1 - 2 - ... - (N-1))
     {
         int N = MAX_N;
         vector<int> p(N);
@@ -171,7 +171,7 @@ int main(){
         {
             auto C = genVector(0, 1, 0, N);
             auto queries = genQueries(N, Q);
-            output(N, p,C, Q, queries, "graph_path_color_random_query_random");
+            output(N, p, C, Q, queries, "10_graph_path_color_random_query_random");
         }
 
         // 白黒交互, クエリ2のみ -> 常にYES
@@ -180,7 +180,7 @@ int main(){
             rep(i, N) C[i] = i % 2;
             auto queries = genQueries(N, Q, 0, Q);
 
-            output(N, p, C, Q, queries, "graph_path_color_alternative_query_all2");
+            output(N, p, C, Q, queries, "10_graph_path_color_alternative_query_all2");
         }
 
         // 全て同じ色, クエリ2のみ -> 常にNO
@@ -188,7 +188,7 @@ int main(){
             vector<int> C(N, rnd.next(0, 1));
             auto queries = genQueries(N, Q, 0, Q);
 
-            output(N, p, C, Q, queries, "graph_path_color_same_query_all2");
+            output(N, p, C, Q, queries, "10_graph_path_color_same_query_all2");
         }
 
         // 全て同じ色, 交互に塗り替え -> 最後のクエリ2のみYES
@@ -200,7 +200,7 @@ int main(){
             }
             queries.emplace_back(vector<int>{1, 0, N - 1});
 
-            output(N, p, C, Q, queries, "graph_path_color_sameToAlternative_query_11...12");
+            output(N, p, C, Q, queries, "10_graph_path_color_sameToAlternative_query_11...12");
         }
 
         // // 色00...011...1, クエリ1は境目以外 -> 境目を{a,b}として、'2 a b' のみYES
@@ -219,5 +219,96 @@ int main(){
         // }
     }
 
+    /*
 
+    // graph_star (1 - {0, 2, 3, 4, ...})
+    //        0
+    //        |
+    // 2 - center - 3
+    //        |
+    //        4
+    {
+        int N = MAX_N;
+        int Q = MAX_Q;
+
+        // 色・クエリランダム
+        {
+            vector<int> p(N);
+            int center = rnd.next(0, N - 1);
+            rep2(i, 1, N) p[i] = (i == center ? 0 : center);
+
+            auto C = genVector(0, 1, 0, N);
+            auto queries = genQueries(N, Q);
+
+            output(N, p,C, Q, queries, "20_graph_star_color_random_query_random");
+        }
+
+        // 白黒交互, クエリ2のみ -> 常にYES
+        {
+            vector<int> p(N);
+            int center = rnd.next(0, N - 1);
+            rep2(i, 1, N) p[i] = (i == center ? 0 : center);
+
+            vector<int> C(N);
+            C[center] = 1;
+            auto queries = genQueries(N, Q, 0, Q);
+
+            output(N, p, C, Q, queries, "20_graph_star_color_alternative_query_all2");
+        }
+
+        // 全て同じ色, クエリ2のみ -> 常にNO
+        {
+            vector<int> p(N);
+            int center = rnd.next(0, N - 1);
+            rep2(i, 1, N) p[i] = (i == center ? 0 : center);
+
+            vector<int> C(N, rnd.next(0, 1));
+            auto queries = genQueries(N, Q, 0, Q);
+
+            output(N, p, C, Q, queries, "20_graph_star_color_same_query_all2");
+        }
+
+        // 全て同じ色, 交互に塗り替え -> 最後のクエリ2のみYES
+        {
+            vector<int> p(N);
+            int center = rnd.next(0, N - 1);
+            rep2(i, 1, N) p[i] = (i == center ? 0 : center);
+
+            vector<int> C(N, rnd.next(0, 1));
+            vector<vector<int>> queries;
+            for (int i = N - 1; i > 0; --i) {
+                queries.emplace_back(vector<int>{0, i});
+            }
+            queries.emplace_back(vector<int>{1, 0, N - 1});
+
+            output(N, p, C, Q, queries, "20_graph_star_color_sameToAlternative_query_11...12");
+        }
+
+        // ウニの中心を塗り替えまくる
+        rep(i, 11) { // クエリ1の比率 = 1 - 10 / (i + 1)
+            vector<int> p(N);
+            int center = rnd.next(0, N - 1);
+            rep2(i, 1, N) p[i] = (i == center ? 0 : center);
+
+            auto C = genVector(0, 1, 0, N);
+            vector<vector<int>> queries;
+            int n2 = rnd.next(max(1, Q - (i+1) * (Q / 10)), Q);
+            int n1 = Q - n2;
+            rep(i, n1) {
+                queries.emplace_back(vector<int>{0, center});
+            }
+            rep(i, n2) {
+                int u = -1, v = -1;
+                while (u == v) {
+                    u = rnd.next(0, N - 1);
+                    v = rnd.next(0, N - 1);
+                }
+                queries.emplace_back(vector<int>{1, u, v});
+            }
+            shuffle(queries.begin(), queries.end());
+
+            output(N, p, C, Q, queries, "20_graph_star_color_random_query_1Center2random", i);
+        }
+    }
+    */
 }
