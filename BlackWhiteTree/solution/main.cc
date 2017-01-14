@@ -167,7 +167,7 @@ void printGraph(const Graph& G) {
     }
 }
 
-main() {
+int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(0);
 
