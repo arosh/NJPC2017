@@ -52,5 +52,14 @@ int main()
 		}
 	}
 
+	{ // large
+		FileName fname( 2, "random_large" );
+		for ( int i = 0; i < 10; ++i )
+		{
+			ofstream out( fname() );
+			gen_random( out, MAX_L - rng.next( 0, 100 ), MAX_L, rng.next( 'a', 'z' ), 'z' );
+		}
+	}
+
 	return 0;
 }
