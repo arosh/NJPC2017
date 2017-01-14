@@ -141,7 +141,7 @@ int main()
 		for ( int i = 0; i < 15; ++i )
 		{
 			ofstream out( fname() );
-			gen_path( out );
+			gen_path( out, MAX_N - rng.next( 0, 100 ), MAX_N );
 		}
 	}
 
@@ -150,7 +150,7 @@ int main()
 		for ( int i = 0; i < 15; ++i )
 		{
 			ofstream out( fname() );
-			gen_uni( out );
+			gen_uni( out, MAX_N - rng.next( 0, 100 ), MAX_N );
 		}
 	}
 
