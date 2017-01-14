@@ -64,6 +64,21 @@ vector<int> makeTree(int n, int t) {
     return pp;
 }
 
+// 根つき木を表す頂点のリストを受け取り、頂点番号をシャッフルする
+vector<int> permVertexList(const vector<int>& p) {
+    int n = p.size();
+    vector<int> perm(n);
+    rep(i, n)
+        perm[i] = i;
+    shuffle(perm.begin() + 1, perm.end());
+
+    vector<int> pp(n);
+    for (int i = 1; i < n; i++)
+        pp[perm[i]] = perm[p[i]];
+
+    return pp;
+}
+
 // a以上b以下の整数を重みwの乱数でn個生成し、vectorを返す
 vector<int> genVector(int a, int b, int w, int n) {
     cerr << "genVector" << endl;
@@ -82,7 +97,7 @@ vector<vector<int>> genQueries(int N, int Q, int n1 = -1, int n2 = -1) {
     cerr << "N = " << N << ", Q = " << Q << endl;
     vector<vector<int>> queries;
     if (n1 == -1 && n2 == -1) {
-        n2 = rnd.next(1, Q);
+        n2 = rnd.next(MIN_Q, Q);
         n1 = Q - n2;
     }
     else {
@@ -148,18 +163,6 @@ int main(){
         // cerr << endl;
     }
 
-    // // 片方が大きいケースを生成
-    // for(int i = 0; i < 10; ++i){
-    //     int A = 1;
-    //     int B = 1;
-    //     while(0.5*A <= B && B <= 1.5*A){
-    //         A = rnd.next(MIN_A, MAX_A);
-    //         B = rnd.next(MIN_B, MAX_B);
-    //     }
-    //     if(rnd.next(0,1)) swap(A, B);
-    //     output(A, B, "60_unbalance", i);
-    // }
-
     // graph_path (0 - 1 - 2 - ... - (N-1))
     {
         int N = MAX_N;
@@ -219,8 +222,6 @@ int main(){
         // }
     }
 
-    /*
-
     // graph_star (1 - {0, 2, 3, 4, ...})
     //        0
     //        |
@@ -240,7 +241,7 @@ int main(){
             auto C = genVector(0, 1, 0, N);
             auto queries = genQueries(N, Q);
 
-            output(N, p,C, Q, queries, "20_graph_star_color_random_query_random");
+            output(N, p, C, Q, queries, "20_graph_star_color_random_query_random");
         }
 
         // 白黒交互, クエリ2のみ -> 常にYES
@@ -285,14 +286,14 @@ int main(){
         }
 
         // ウニの中心を塗り替えまくる
-        rep(i, 11) { // クエリ1の比率 = 1 - 10 / (i + 1)
+        rep(i, 11) { // クエリ1の比率 = 1 - i / 10
             vector<int> p(N);
             int center = rnd.next(0, N - 1);
             rep2(i, 1, N) p[i] = (i == center ? 0 : center);
 
             auto C = genVector(0, 1, 0, N);
             vector<vector<int>> queries;
-            int n2 = rnd.next(max(1, Q - (i+1) * (Q / 10)), Q);
+            int n2 = max(MIN_Q, Q - i * (Q / 10));
             int n1 = Q - n2;
             rep(i, n1) {
                 queries.emplace_back(vector<int>{0, center});
@@ -310,5 +311,110 @@ int main(){
             output(N, p, C, Q, queries, "20_graph_star_color_random_query_1Center2random", i);
         }
     }
-    */
+
+    // graph_hitode
+    // ある頂点centerから幾つかのパスが伸びているグラフ
+    {
+        int N = MAX_N;
+        int Q = MAX_Q;
+
+        // 色・クエリランダム
+        rep(i, 3) {
+            vector<int> p(N);
+            int num_path = min(3, 10 * (i + 1)); // パスの本数は10, 100, 1000
+            vector<int> leaf(num_path + 1); // leaf[i] = i番目のパスの葉 (!!iは1-indexed!!)
+            rep2(i, 1, num_path + 1) {
+                // 1, 2, ..., num_path が最初の葉
+                p[i] = 0;
+                leaf[i] = i;
+            }
+            rep2(i, num_path + 1, N) {
+                // ランダムに選んだ葉をiの親とし、iが新たな葉になる
+                int t = rnd.next(1, num_path);
+                p[i] = leaf[t];
+                leaf[t] = i;
+            }
+
+            // 頂点をシャッフル
+            vector<int> perm(N);
+            rep(i, N) perm[i] = i;
+            shuffle(perm.begin() + 1, perm.end()); // 0が根であることは変えてはならない
+
+            vector<int> pp(N);
+            for (int i = 1; i < N; i++)
+                pp[perm[i]] = perm[p[i]];
+
+            p = std::move(pp);
+
+            auto C = genVector(0, 1, 0, N);
+            auto queries = genQueries(N, Q);
+
+            output(N, p, C, Q, queries, "30_graph_hitode_color_random_query_random", i);
+        }
+    }
+
+    // graph_caterpillar
+    // パスに頂点を刺しまくった木
+    {
+        int N = MAX_N;
+        int Q = MAX_Q;
+
+        // 色・クエリランダム
+        rep(i, 3) {
+            vector<int> p(N);
+            int len_path = min(5, 100 * (i + 1)); // パスの長さ(頂点数)は100, 1000, 10000
+            rep2(i, 1, len_path) {
+                // 0 - 1 - ... - (len_path - 1)
+                p[i] = i - 1;
+            }
+            rep2(i, len_path, N) {
+                // パスから頂点をランダムに選び、iの親とする
+                p[i] = rnd.next(0, len_path - 1);
+            }
+            p = permVertexList(p);
+            auto C = genVector(0, 1, 0, N);
+            auto queries = genQueries(N, Q);
+
+            output(N, p, C, Q, queries, "40_graph_caterpillar_color_random_query_random", i);
+        }
+    }
+
+    // graph_binaryTree
+    {
+        int N = MAX_N;
+        int Q = MAX_Q;
+
+        // 色・クエリランダム
+        rep(i, 3) {
+            vector<int> p(N);
+            rep2(i, 1, N) {
+                p[i] = (i - 1) / 2;
+            }
+            p = permVertexList(p);
+            auto C = genVector(0, 1, 0, N);
+            auto queries = genQueries(N, Q);
+
+            output(N, p, C, Q, queries, "50_graph_binaryTree_color_random_query_random", i);
+        }
+    }
+
+    // graph_ternaryTree
+    {
+        int N = MAX_N;
+        int Q = MAX_Q;
+
+        // 色・クエリランダム
+        rep(i, 3) {
+            vector<int> p(N);
+            rep2(i, 1, N) {
+                p[i] = (i - 1) / 3;
+            }
+            p = permVertexList(p);
+            auto C = genVector(0, 1, 0, N);
+            auto queries = genQueries(N, Q);
+
+            output(N, p, C, Q, queries, "60_graph_ternaryTree_color_random_query_random", i);
+        }
+    }
+
 }
