@@ -61,5 +61,14 @@ int main()
 		}
 	}
 
+	{ // maximal
+		FileName fname( 3, "maximal" );
+		for ( int i = 0; i < 5; ++i )
+		{
+			ofstream out( fname() );
+			gen_random( out, MAX_L, MAX_L, rng.next( 'a', 'z' ), 'z' );
+		}
+	}
+
 	return 0;
 }
