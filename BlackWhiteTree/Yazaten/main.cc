@@ -9,10 +9,11 @@ typedef pair<int,int> pii;
 #define pb push_back
 #define INF (1e9+1)
 
+//verified
 #define MAX_V 150000
+
 struct edge{ int to,cost; };
 vector<edge> G[MAX_V];
-
 
 //LCA(セグ木版)----------------------------------------------------------------------------------------
 vector<int> depth,vs;
@@ -81,9 +82,7 @@ pii LCA (int a,int b,segtree<pii> &st){ //最小共通祖先の深さを返す
 	if(arg1>arg2)swap(arg1,arg2);
 	return st.find(arg1,arg2);
 }
-
 //---------------------------------------------------------------------------------------------------
-
 
 //EulerTourとBIT-------------------------------------------------------------------------------------
 vector<int> et, begv(MAX_V), endv(MAX_V);
@@ -98,8 +97,6 @@ void tour(int cur,int prev){
 	endv[cur]=et.size();
 }
 
-
-//verified
 //note that this is 1-index
 template<class T>
 class BIT{
@@ -129,32 +126,26 @@ public:
 		}
 	}
 	
-	T get_cost(int u,int v,segtree<pii> &st){
-		int lca=LCA(u,v,st).second;
+	T get_cost(int u,int v,int lca){
 		return ( sum(begv[u]+1)-sum(begv[lca]+1) + sum(begv[v]+1)-sum(begv[lca]+1) );
 	}
 	
-	void rev_cost(int u,int v,segtree<pii> &st){
+	void rev_cost(int u,int v,int lca){
 		//u は v の親である
-		int res = get_cost(u,v,st);
-		if( res==0 ){
-			add(begv[v]+1,+1);
-			add(endv[v],-1);
-		}else{
-			add(begv[v]+1,-1);
-			add(endv[v],+1);
-		}
+		int res = get_cost(u,v,lca);
+		
+		add(1+ begv[v],(res?-1:1)*1);
+		add(1+ endv[v],(res?1:-1)*1);
+		
 	}
 };
-
 //---------------------------------------------------------------------------------------------------
-
 
 //以下が実質的な実装部分---------------------------------------------------------------------------------
 void dfs(int cur,int prev, BIT<int> &bt, vector<int> &c, segtree<pii> &st){
 	for(auto e:G[cur]){
 		if(e.to==prev)continue;
-		if(c[cur]==c[e.to])bt.rev_cost(cur, e.to,st);
+		if(c[cur]==c[e.to])bt.rev_cost(cur, e.to,LCA(cur,e.to,st).second);
 		dfs(e.to,cur,bt,c,st);
 	}
 }
@@ -163,17 +154,17 @@ void dfs(int cur,int prev, BIT<int> &bt, vector<int> &c, segtree<pii> &st){
 int main(){
 	int v;
 	cin>>v;
-
+	
 	vector<int> par(v);
 	for(int i=1;i<v;i++){
 		int p;
 		cin>>p;
 		p--;
 		par[i]=p;
-		G[i].pb(edge{p,0});
+		//		G[i].pb(edge{p,0});
 		G[p].pb(edge{i,0});
 	}
-
+	
 	//LCA用にオイラーツアー + セグ木
 	init();                                                         // aranging depth[] , vs[] and id[]
 	segtree<pii> st(depth.size(),pii((1LL<<31)-1,(1LL<<31)-1));     // the number of elements is depth.size()
@@ -201,12 +192,12 @@ int main(){
 			cin>>u;
 			u--;
 			if(u==0)continue;
-			bt.rev_cost(par[u],u,st);
+			bt.rev_cost(par[u],u,LCA(par[u],u,st).second);
 		}else{
 			int u,v;
 			cin>>u>>v;
 			u--,v--;
-			if(bt.get_cost(u, v, st)==0)cout<<"YES"<<endl;
+			if(bt.get_cost(u, v, LCA(u,v,st).second)==0)cout<<"YES"<<endl;
 			else cout<<"NO"<<endl;
 		}
 	}
