@@ -141,7 +141,7 @@ int main()
 		for ( int i = 0; i < 15; ++i )
 		{
 			ofstream out( fname() );
-			gen_random( out );
+			gen_path( out );
 		}
 	}
 
