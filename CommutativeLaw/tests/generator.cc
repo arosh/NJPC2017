@@ -48,7 +48,7 @@ int main()
 		for ( int i = 0; i < 10; ++i )
 		{
 			ofstream out( fname() );
-			gen_random( out, MIN_L, MAX_L );
+			gen_random( out, MIN_L, MAX_L, rng.next( 'a', 'z' ), 'z' );
 		}
 	}
 
