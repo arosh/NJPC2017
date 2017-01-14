@@ -4,6 +4,7 @@
 #include "./constraints.hpp"
 #include <sys/types.h>
 #include <unistd.h>
+#include <cassert>
 
 using namespace std;
 
@@ -12,7 +13,7 @@ using namespace std;
 
 // aとbをファイルストリームに出力する
 // ファイル名は prefix_num.in (ex: 00_sample_00.in)
-void output(int N, const vector<int>& p, const vector<int> C, int Q, const vector<vector<int>> queries, const string &prefix, int num){
+void output(int N, const vector<int>& p, const vector<int> C, int Q, const vector<vector<int>> queries, const string &prefix, int num = 0){
     cerr << "output" << endl;
     char name[100];
     sprintf(name, "%s_%02d.in", prefix.c_str(), num);
@@ -75,20 +76,28 @@ vector<int> genVector(int a, int b, int w, int n) {
 
 // N頂点の木に関するクエリをQ個生成
 // ただし少なくとも1つは'2 u v'
-vector<vector<int>> genQueries(int N, int Q) {
+// n1, n2でクエリ1, 2の個数を指定(-1, -1の場合はランダム)
+vector<vector<int>> genQueries(int N, int Q, int n1 = -1, int n2 = -1) {
     cerr << "genQueries" << endl;
     cerr << "N = " << N << ", Q = " << Q << endl;
     vector<vector<int>> queries;
-    int num_query_2 = rnd.next(1, Q);
-    int num_query_1 = Q - num_query_2;
-    cerr << num_query_1 << " " << num_query_2 << endl;
-    rep(i, num_query_1) {
+    if (n1 == -1 && n2 == -1) {
+        n2 = rnd.next(1, Q);
+        n1 = Q - n2;
+    }
+    else {
+        assert(0 <= n1 && n1 <= Q);
+        assert(1 <= n2 && n2 <= Q);
+        assert(n1 + n2 == Q);
+    }
+    cerr << n1 << " " << n2 << endl;
+    rep(i, n1) {
         // cerr << i << endl;
         // クエリ0('1 u' 色反転クエリ)
         int u = rnd.next(N - 1);
         queries.emplace_back(vector<int>{0, u});
     }
-    rep(i, num_query_2) {
+    rep(i, n2) {
         // cerr << i << endl;
         // クエリ1('2 u v' 質問クエリ)
         int u = -1, v = -1;
@@ -99,6 +108,7 @@ vector<vector<int>> genQueries(int N, int Q) {
         }
         queries.emplace_back(vector<int>{1, u, v});
     }
+    shuffle(queries.begin(), queries.end());
     return queries;
 }
 
@@ -117,7 +127,7 @@ int main(){
         int Q = rnd.next(MIN_Q, MAX_Q);
         auto queries = genQueries(N, Q);
 
-        output(N, p, C, Q, queries, "10_random", i);
+        output(N, p, C, Q, queries, "00_graph_random_color_random_query_random", i);
 
         // cerr << "N = " << N << ", t = " << t << endl;
         // rep(i, N) {
@@ -149,4 +159,65 @@ int main(){
     //     if(rnd.next(0,1)) swap(A, B);
     //     output(A, B, "60_unbalance", i);
     // }
+
+    // path (0 - 1 - 2 - ... - (N-1))
+    {
+        int N = MAX_N;
+        vector<int> p(N);
+        rep2(i, 1, N) p[i] = i - 1;
+        int Q = MAX_Q;
+
+        // 色・クエリランダム
+        {
+            auto C = genVector(0, 1, 0, N);
+            auto queries = genQueries(N, Q);
+            output(N, p,C, Q, queries, "graph_path_color_random_query_random");
+        }
+
+        // 白黒交互, クエリ2のみ -> 常にYES
+        {
+            vector<int> C(N);
+            rep(i, N) C[i] = i % 2;
+            auto queries = genQueries(N, Q, 0, Q);
+
+            output(N, p, C, Q, queries, "graph_path_color_alternative_query_all2");
+        }
+
+        // 全て同じ色, クエリ2のみ -> 常にNO
+        {
+            vector<int> C(N, rnd.next(0, 1));
+            auto queries = genQueries(N, Q, 0, Q);
+
+            output(N, p, C, Q, queries, "graph_path_color_same_query_all2");
+        }
+
+        // 全て同じ色, 交互に塗り替え -> 最後のクエリ2のみYES
+        {
+            vector<int> C(N, rnd.next(0, 1));
+            vector<vector<int>> queries;
+            for (int i = N - 1; i > 0; --i) {
+                queries.emplace_back(vector<int>{0, i});
+            }
+            queries.emplace_back(vector<int>{1, 0, N - 1});
+
+            output(N, p, C, Q, queries, "graph_path_color_sameToAlternative_query_11...12");
+        }
+
+        // // 色00...011...1, クエリ1は境目以外 -> 境目を{a,b}として、'2 a b' のみYES
+        // {
+        //     vector<int> C(N);
+        //     int a = rnd.next(0, N - 1);
+        //     int b = a + 1;
+        //     vector<vector<int>> queries;
+        //     rep(i, Q) {
+        //         if (!rnd.next(0, 1)) {
+        //
+        //         }
+        //     }
+        //
+        //     output(N, p, C, Q, queries, "graph_path_color_00...011...1_query_mostlyrandom");
+        // }
+    }
+
+
 }
