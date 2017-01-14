@@ -14,7 +14,7 @@
 ## OTHER
 - [問題一覧](https://docs.google.com/spreadsheets/d/1MQtK4yD7vLQ0U357JPXHh0yCbHhzhqG8rqPb8YgKRXc/edit#gid=0)
 - [担当表](https://docs.google.com/spreadsheets/d/1qkvnB38rGkIEEpQGwYMW3M6nI8SWrH1eEDOtbUCPibU/edit#gid=0)
-- [Rime 1.0 documentation](http://nya3jp.github.io/rime/)
+- [Rime 1.0 ドキュメント](https://rime.readthedocs.io/ja/latest/)
 - [競技プログラミングの作問進行法](http://itohjam.hatenablog.com/entry/2014/12/02/214019)
 - [testlib](http://codeforces.com/testlib)
 - [作問ツールの使い方](https://drive.google.com/file/d/0B8nawKhBgu7IV0hTcnNMUEhqb2c/view?usp=sharing)
