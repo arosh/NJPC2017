@@ -182,10 +182,11 @@ main() {
     }
 
     vi C(N);
+    rep(i, N) cin >> C[i];
     e_cost.resize(N - 1);
-    rep(i, N) {
-        cin >> C[i];
-        if (i != 0 && C[i] == C[p[i]]) {
+    rep2(i, 1, N) {
+        if (C[i] == C[p[i]]) {
+            // output(i, p[i], C[i], C[p[i]]);
             e_cost[i - 1] = 1;
         }
     }
