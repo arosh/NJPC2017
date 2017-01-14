@@ -100,5 +100,15 @@ int main()
 		}
 	}
 
+	{ // single
+		FileName fname( 5, "single" );
+		for ( int i = 0; i < 10; ++i )
+		{
+			ofstream out( fname() );
+			const char c = rng.next( 'a', 'z' );
+			gen_random( out, MAX_L, MAX_L, c, c );
+		}
+	}
+
 	return 0;
 }
