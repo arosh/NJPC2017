@@ -1,29 +1,59 @@
 #!/bin/bash
 set -ue
 
+# http://stackoverflow.com/questions/1469849
 #arr="A B C D E F G H"
-arr="A"
+arr="A B D E F G H"
 for x in $arr; do
-  # フォルダがなければ作成する
-  if [ ! -d ./$x/in ]; then
-    mkdir -p ./$x/in
+  # フォルダがあれば削除する
+  if [ -d ./$x/in ]; then
+    rm -rf ./$x/in
   fi
-  rm ./$x/in/*.in
+  mkdir -p ./$x/in
 
-  if [ ! -d ./$x/out ]; then
-    mkdir -p ./$x/out
+  if [ -d ./$x/out ]; then
+    rm -rf ./$x/out
   fi
-  rm ./$x/out/*.out
+  mkdir -p ./$x/out
 done
 
 cp ../InputForm/rime-out/tests/*.in ./A/in
-cp ../InputForm/rime-out/solution/*.out ./A/out
+cp ../InputForm/rime-out/tests/*.diff ./A/out
+rename 's/\.diff$/\.out/' ./A/out/*.diff
+
+cp ../GridGraph/rime-out/tests/*.in ./B/in
+cp ../GridGraph/rime-out/tests/*.diff ./B/out
+rename 's/\.diff$/\.out/' ./B/out/*.diff
+
+#cp ../HurdleRace/rime-out/tests/*.in ./C/in
+#cp ../HurdleRace/rime-out/solution/*.out ./C/out
+#rename 's/\.diff$/\.out/' ./C/out/*.diff
+
+cp ../NMPuzzle/rime-out/tests/*.in ./D/in
+cp ../NMPuzzle/rime-out/tests/*.diff ./D/out
+rename 's/\.diff$/\.out/' ./D/out/*.diff
+
+cp ../SparselyPopulatedRegions/rime-out/tests/*.in ./E/in
+cp ../SparselyPopulatedRegions/rime-out/tests/*.diff ./E/out
+rename 's/\.diff$/\.out/' ./E/out/*.diff
+
+#cp ../MixedDoubles/rime-out/tests/*.in ./F/in
+#cp ../MixedDoubles/rime-out/solution/*.out ./F/out
+#rename 's/\.diff$/\.out/' ./F/out/*.diff
+
+cp ../CommutativeLaw/rime-out/tests/*.in ./G/in
+cp ../CommutativeLaw/rime-out/tests/*.diff ./G/out
+rename 's/\.diff$/\.out/' ./G/out/*.diff
+
+cp ../BlackWhiteTree/rime-out/tests/*.in ./H/in
+cp ../BlackWhiteTree/rime-out/tests/*.diff ./H/out
+rename 's/\.diff$/\.out/' ./H/out/*.diff
 
 php ./imojudge_upload.php 2308 ./A
-#php ./imojudge_upload.php 2309 ./B
+php ./imojudge_upload.php 2309 ./B
 #php ./imojudge_upload.php 2310 ./C
-#php ./imojudge_upload.php 2311 ./D
-#php ./imojudge_upload.php 2312 ./E
+php ./imojudge_upload.php 2311 ./D
+php ./imojudge_upload.php 2312 ./E
 #php ./imojudge_upload.php 2313 ./F
-#php ./imojudge_upload.php 2314 ./G
-#php ./imojudge_upload.php 2315 ./H
+php ./imojudge_upload.php 2314 ./G
+php ./imojudge_upload.php 2315 ./H
