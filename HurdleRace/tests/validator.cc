@@ -2,6 +2,7 @@
 #include "./constraints.hpp"
 #include <cassert>
 #include <vector>
+using namespace std;
 
 int main(){
     registerValidation();
@@ -12,10 +13,10 @@ int main(){
     vector<int> X(N);
     for (int i = 0; i < N; i++) {
       X[i] = inf.readInt(MIN_Xi, MAX_Xi);
+      inf.readEoln();
       if (i > 0) {
         assert(X[i] > X[i - 1]);
       }
     }
-    inf.readEoln();
     inf.readEof();
 }
