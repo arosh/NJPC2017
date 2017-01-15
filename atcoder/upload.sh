@@ -32,6 +32,7 @@ rename 's/\.diff$/\.out/' ./B/out/*.diff
 cp ../NMPuzzle/rime-out/tests/*.in ./D/in
 cp ../NMPuzzle/rime-out/tests/*.diff ./D/out
 rename 's/\.diff$/\.out/' ./D/out/*.diff
+cp ../NMPuzzle/tests/judge.cc ./D/etc/output_checker.cpp
 
 cp ../SparselyPopulatedRegions/rime-out/tests/*.in ./E/in
 cp ../SparselyPopulatedRegions/rime-out/tests/*.diff ./E/out
