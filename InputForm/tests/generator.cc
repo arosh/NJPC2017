@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
   // Use registerGen(argc, argv, 1) to develop new generator
   registerGen(argc, argv, 1);
   FileName fileName(50, "random");
-  for(int i = 0; i < 20; i++) {
+  for(int i = 0; i < 10; i++) {
     rnd.setSeed(16 + i);
     const int L = rnd.next(MIN_L, MAX_L);
     const string S = rnd.next("[a-z]{%d}", rnd.next(MIN_L, MAX_L));
