@@ -127,40 +127,95 @@ vector<vector<int>> genQueries(int N, int Q, int n1 = -1, int n2 = -1) {
     return queries;
 }
 
+// 頂点nowからstep個前の親までのパスを交互に塗る
+// 頂点0(根)に到達したらそこで終了
+void coloringPath(int now, int step, int color, const vector<int>& p, vector<int>& C) {
+    C[now] = color;
+    if (now == 0 || step == 0) return;
+    coloringPath(p[now], step - 1, color ^ 1, p, C);
+}
+
+// 幾つかのパスを選んで交互に塗る
+void coloringPath(const vector<int>& p, vector<int>& C) {
+    int N = p.size();
+    rep(i, rnd.next(1, 100)) {
+        coloringPath(rnd.next(0, N - 1), rnd.next(1, N), rnd.next(0, 1), p, C);
+    }
+}
+
+using Graph = vector<vector<int>>;
+
+// dfs
+void coloringTreeAlternately(int now, int pre, int color, const Graph& G, vector<int>& C) {
+    C[now] = color;
+    for (auto nxt : G[now]) {
+        if (nxt == pre) continue;
+        coloringTreeAlternately(nxt, now, color ^ 1, G, C);
+    }
+}
+
+// 木全体を交互に塗る
+void coloringTreeAlternately(const vector<int>& p, vector<int>& C) {
+    int N = p.size();
+    Graph G(N);
+    rep2(i, 1, N) {
+        G[i].emplace_back(p[i]);
+        G[p[i]].emplace_back(i);
+    }
+    coloringTreeAlternately(0, -1, rnd.next(0, 1), G, C);
+}
+
 int main(){
     // 乱数のシードを設定
     // pidを足すことで、1秒以上間を置かずに起動したときに同じシードになってしまうのを防ぐ
     rnd.setSeed(time(0)+getpid());
 
-    // t = 0のランダムケースを10個生成
-    for(int i = 0; i < 10; ++i){
-        cerr << i << endl;
-        int N = rnd.next(MIN_N, MAX_N);
-        int t = 0;
-        auto p = makeTree(N, t);
-        auto C = genVector(0, 1, 0, N);
-        int Q = rnd.next(MIN_Q, MAX_Q);
-        auto queries = genQueries(N, Q);
+    // t = 0のランダムグラフ
+    {
+        // 色交互から幾つかのパスを交互に塗り替えたケースを5個生成
+        for(int k = 0; k < 5; ++k){
+            int N = rnd.next(MIN_N, MAX_N);
+            int t = 0;
+            auto p = makeTree(N, t);
+            vector<int> C(N);
+            coloringTreeAlternately(p, C);
+            coloringPath(p, C);
+            int Q = rnd.next(MIN_Q, MAX_Q);
+            auto queries = genQueries(N, Q);
 
-        output(N, p, C, Q, queries, "00_graph_random_color_random_query_random", i);
+            output(N, p, C, Q, queries, "00_graph_random_color_alternate_query_random", k);
+        }
 
-        // cerr << "N = " << N << ", t = " << t << endl;
-        // rep(i, N) {
-        //     cerr << (i ? " " : "") << p[i];
-        // }
-        // cerr << endl;
+        // 色ランダムから幾つかのパスを交互に塗り替えたケースを5個生成
+        for(int k = 0; k < 5; ++k){
+            int N = rnd.next(MIN_N, MAX_N);
+            int t = 0;
+            auto p = makeTree(N, t);
+            auto C = genVector(0, 1, 0, N);
+            coloringPath(p, C);
+            int Q = rnd.next(MIN_Q, MAX_Q);
+            auto queries = genQueries(N, Q);
 
-        // vector<int> deg(N);
-        // rep2(i, 1, N) {
-        //     deg[i]++;
-        //     deg[p[i]]++;
-        // }
-        //
-        // rep(i, N) {
-        //     cerr << (i ? " " : "") << deg[i];
-        // }
-        // cerr << endl;
-        // cerr << endl;
+            output(N, p, C, Q, queries, "00_graph_random_color_random_query_random", k);
+
+            // cerr << "N = " << N << ", t = " << t << endl;
+            // rep(i, N) {
+            //     cerr << (i ? " " : "") << p[i];
+            // }
+            // cerr << endl;
+
+            // vector<int> deg(N);
+            // rep2(i, 1, N) {
+            //     deg[i]++;
+            //     deg[p[i]]++;
+            // }
+            //
+            // rep(i, N) {
+            //     cerr << (i ? " " : "") << deg[i];
+            // }
+            // cerr << endl;
+            // cerr << endl;
+        }
     }
 
     // graph_path (0 - 1 - 2 - ... - (N-1))
@@ -183,7 +238,7 @@ int main(){
             rep(i, N) C[i] = i % 2;
             auto queries = genQueries(N, Q, 0, Q);
 
-            output(N, p, C, Q, queries, "10_graph_path_color_alternative_query_all2");
+            output(N, p, C, Q, queries, "10_graph_path_color_alternate_query_all2");
         }
 
         // 全て同じ色, クエリ2のみ -> 常にNO
@@ -203,7 +258,7 @@ int main(){
             }
             queries.emplace_back(vector<int>{1, 0, N - 1});
 
-            output(N, p, C, Q, queries, "10_graph_path_color_sameToAlternative_query_11...12");
+            output(N, p, C, Q, queries, "10_graph_path_color_sametoAlternate_query_11...12");
         }
 
         // // 色00...011...1, クエリ1は境目以外 -> 境目を{a,b}として、'2 a b' のみYES
@@ -254,7 +309,7 @@ int main(){
             C[center] = 1;
             auto queries = genQueries(N, Q, 0, Q);
 
-            output(N, p, C, Q, queries, "20_graph_star_color_alternative_query_all2");
+            output(N, p, C, Q, queries, "20_graph_star_color_alternate_query_all2");
         }
 
         // 全て同じ色, クエリ2のみ -> 常にNO
@@ -282,18 +337,18 @@ int main(){
             }
             queries.emplace_back(vector<int>{1, 0, N - 1});
 
-            output(N, p, C, Q, queries, "20_graph_star_color_sameToAlternative_query_11...12");
+            output(N, p, C, Q, queries, "20_graph_star_color_sametoAlternate_query_11...12");
         }
 
         // ウニの中心を塗り替えまくる
-        rep(i, 11) { // クエリ1の比率 = 1 - i / 10
+        rep(k, 11) { // クエリ1の比率 = 1 - k / 10
             vector<int> p(N);
             int center = rnd.next(0, N - 1);
             rep2(i, 1, N) p[i] = (i == center ? 0 : center);
 
             auto C = genVector(0, 1, 0, N);
             vector<vector<int>> queries;
-            int n2 = max(MIN_Q, Q - i * (Q / 10));
+            int n2 = max(MIN_Q, Q - k * (Q / 10));
             int n1 = Q - n2;
             rep(i, n1) {
                 queries.emplace_back(vector<int>{0, center});
@@ -308,7 +363,7 @@ int main(){
             }
             shuffle(queries.begin(), queries.end());
 
-            output(N, p, C, Q, queries, "20_graph_star_color_random_query_1Center2random", i);
+            output(N, p, C, Q, queries, "20_graph_star_color_random_query_1Center2random", k);
         }
     }
 
@@ -319,9 +374,9 @@ int main(){
         int Q = MAX_Q;
 
         // 色・クエリランダム
-        rep(i, 3) {
+        rep(k, 3) {
             vector<int> p(N);
-            int num_path = min(3, 10 * (i + 1)); // パスの本数は10, 100, 1000
+            int num_path = min(3, 10 * (k + 1)); // パスの本数は10, 100, 1000
             vector<int> leaf(num_path + 1); // leaf[i] = i番目のパスの葉 (!!iは1-indexed!!)
             rep2(i, 1, num_path + 1) {
                 // 1, 2, ..., num_path が最初の葉
@@ -349,7 +404,7 @@ int main(){
             auto C = genVector(0, 1, 0, N);
             auto queries = genQueries(N, Q);
 
-            output(N, p, C, Q, queries, "30_graph_hitode_color_random_query_random", i);
+            output(N, p, C, Q, queries, "30_graph_hitode_color_random_query_random", k);
         }
     }
 
@@ -360,9 +415,9 @@ int main(){
         int Q = MAX_Q;
 
         // 色・クエリランダム
-        rep(i, 3) {
+        rep(k, 3) {
             vector<int> p(N);
-            int len_path = min(5, 100 * (i + 1)); // パスの長さ(頂点数)は100, 1000, 10000
+            int len_path = min(5, 100 * (k + 1)); // パスの長さ(頂点数)は100, 1000, 10000
             rep2(i, 1, len_path) {
                 // 0 - 1 - ... - (len_path - 1)
                 p[i] = i - 1;
@@ -375,7 +430,7 @@ int main(){
             auto C = genVector(0, 1, 0, N);
             auto queries = genQueries(N, Q);
 
-            output(N, p, C, Q, queries, "40_graph_caterpillar_color_random_query_random", i);
+            output(N, p, C, Q, queries, "40_graph_caterpillar_color_random_query_random", k);
         }
     }
 
@@ -385,7 +440,7 @@ int main(){
         int Q = MAX_Q;
 
         // 色・クエリランダム
-        rep(i, 3) {
+        rep(k, 3) {
             vector<int> p(N);
             rep2(i, 1, N) {
                 p[i] = (i - 1) / 2;
@@ -394,7 +449,7 @@ int main(){
             auto C = genVector(0, 1, 0, N);
             auto queries = genQueries(N, Q);
 
-            output(N, p, C, Q, queries, "50_graph_binaryTree_color_random_query_random", i);
+            output(N, p, C, Q, queries, "50_graph_binaryTree_color_random_query_random", k);
         }
     }
 
@@ -404,7 +459,7 @@ int main(){
         int Q = MAX_Q;
 
         // 色・クエリランダム
-        rep(i, 3) {
+        rep(k, 3) {
             vector<int> p(N);
             rep2(i, 1, N) {
                 p[i] = (i - 1) / 3;
@@ -413,7 +468,39 @@ int main(){
             auto C = genVector(0, 1, 0, N);
             auto queries = genQueries(N, Q);
 
-            output(N, p, C, Q, queries, "60_graph_ternaryTree_color_random_query_random", i);
+            output(N, p, C, Q, queries, "60_graph_ternaryTree_color_random_query_random", k);
+        }
+    }
+
+    // graph_triangle
+    //           0
+    //          / ¥
+    //         1   2
+    //        /    / ¥
+    //       3    4   5
+    //      /    /   / ¥
+    //     6    7   8   9
+    {
+        int N = MAX_N;
+        int Q = MAX_Q;
+
+        // 色・クエリランダム
+        rep(k, 3) {
+            vector<int> p(N);
+            int i = 1;
+            for (int t = 1; t * (t + 1) / 2 < N; t++) {
+                rep(j, t) {
+                    p[i] = i - t;
+                    i++;
+                }
+                p[i] = i - t - 1;
+                i++;
+            }
+            p = permVertexList(p);
+            auto C = genVector(0, 1, 0, N);
+            auto queries = genQueries(N, Q);
+
+            output(N, p, C, Q, queries, "70_graph_triangle_color_random_query_random", k);
         }
     }
 

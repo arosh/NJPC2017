@@ -8,5 +8,5 @@
 problem(title = "BlackWhiteTree",
         id = "H",
         reference_solution = 'solution',
-        time_limit = 2.0,
+        time_limit = 4.0,
         )
