@@ -16,7 +16,6 @@ for x in $arr; do
   rm ./$x/out/*.out
 done
 
-
 cp ../InputForm/rime-out/tests/*.in ./A/in
 cp ../InputForm/rime-out/solution/*.out ./A/out
 
