@@ -4,3 +4,4 @@ constexpr int MIN_D = 1;
 constexpr int MAX_D = 1000000000;
 constexpr int MIN_C = 0;
 constexpr int MAX_C = 1000;
+constexpr int MIN_AB = 1;
