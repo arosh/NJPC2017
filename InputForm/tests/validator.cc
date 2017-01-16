@@ -4,9 +4,9 @@
 
 int main(){
     registerValidation();
-    inf.readInt(MIN_L, MAX_L,"n");
+    inf.readInt(MIN_L, MAX_L, "n");
     inf.readEoln();
-    inf.readToken("[a-z]{MIN_L,MAX_L}", "s");
+    inf.readToken(format("[a-z]{%d,%d}", MIN_L, MAX_L), "s");
     inf.readEoln();
     inf.readEof();
 }
