@@ -38,9 +38,10 @@ cp ../SparselyPopulatedRegions/rime-out/tests/*.in ./E/in
 cp ../SparselyPopulatedRegions/rime-out/tests/*.diff ./E/out
 rename 's/\.diff$/\.out/' ./E/out/*.diff
 
-#cp ../MixedDoubles/rime-out/tests/*.in ./F/in
-#cp ../MixedDoubles/rime-out/solution/*.out ./F/out
-#rename 's/\.diff$/\.out/' ./F/out/*.diff
+cp ../MixedDoubles/rime-out/tests/*.in ./F/in
+cp ../MixedDoubles/rime-out/tests/*.diff ./F/out
+rename 's/\.diff$/\.out/' ./F/out/*.diff
+cp ../MixedDoubles/tests/judge.cc ./F/etc/output_checker.cpp
 
 cp ../CommutativeLaw/rime-out/tests/*.in ./G/in
 cp ../CommutativeLaw/rime-out/tests/*.diff ./G/out
