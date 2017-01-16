@@ -2,8 +2,7 @@
 set -ue
 
 # http://stackoverflow.com/questions/1469849
-#arr="A B C D E F G H"
-arr="A B D E F G H"
+arr="A B C D E F G H"
 for x in $arr; do
   # フォルダがあれば削除する
   if [ -d ./$x/in ]; then
@@ -25,9 +24,9 @@ cp ../GridGraph/rime-out/tests/*.in ./B/in
 cp ../GridGraph/rime-out/tests/*.diff ./B/out
 rename 's/\.diff$/\.out/' ./B/out/*.diff
 
-#cp ../HurdleRace/rime-out/tests/*.in ./C/in
-#cp ../HurdleRace/rime-out/solution/*.out ./C/out
-#rename 's/\.diff$/\.out/' ./C/out/*.diff
+cp ../HurdleRace/rime-out/tests/*.in ./C/in
+cp ../HurdleRace/rime-out/tests/*.diff ./C/out
+rename 's/\.diff$/\.out/' ./C/out/*.diff
 
 cp ../NMPuzzle/rime-out/tests/*.in ./D/in
 cp ../NMPuzzle/rime-out/tests/*.diff ./D/out
@@ -53,9 +52,9 @@ rename 's/\.diff$/\.out/' ./H/out/*.diff
 
 php ./imojudge_upload.php 2308 ./A
 php ./imojudge_upload.php 2309 ./B
-#php ./imojudge_upload.php 2310 ./C
+php ./imojudge_upload.php 2310 ./C
 php ./imojudge_upload.php 2311 ./D
 php ./imojudge_upload.php 2312 ./E
-#php ./imojudge_upload.php 2313 ./F
+php ./imojudge_upload.php 2313 ./F
 php ./imojudge_upload.php 2314 ./G
 php ./imojudge_upload.php 2315 ./H
