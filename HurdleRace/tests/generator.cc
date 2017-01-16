@@ -5,6 +5,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <random>
+#include <cassert>
 
 using namespace std;
 
@@ -49,14 +50,16 @@ int main(){
 
     // Xiの小さいケースを10個生成
     vector<int> numbers(MAX_Xi_SMALL);
-    for(int i=0;i<numbers.size()-1;i++)numbers[i]=i+1;
+    for(int i=0;i<numbers.size();i++)numbers[i]=i+1;
     for(int case_num = 0; case_num < 10; ++case_num){
         int N = rnd.next(MIN_N, MAX_N_SMALL);
         int L = rnd.next(MIN_L, MAX_L);
         shuffle(numbers.begin(),numbers.end());
 
         vector<int> X(N);
-        for(int i=0;i<N;i++)X[i] = numbers[i];
+        for(int i=0;i<N;i++){
+            X[i] = numbers[i];
+        }
         sort(X.begin(),X.end());
 
         output(N, L, X, "50_random_small", case_num);

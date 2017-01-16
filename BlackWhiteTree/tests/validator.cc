@@ -64,6 +64,7 @@ int main(){
 		inf.readEoln();
 	}
 
+	bool query2_used=false;
 	int Q = inf.readInt(MIN_Q,MAX_Q);
 	inf.readEoln();
 	for(int i=0;i<Q;i++){
@@ -73,6 +74,7 @@ int main(){
 		if(query_type==1){
 			inf.readInt(1,N);
 		}else if(query_type==2){
+			query2_used = true;
 			int u,v;
 			u = inf.readInt(1,N);
 			inf.readSpace();
@@ -84,5 +86,6 @@ int main(){
 	}
     inf.readEof();
 
+    assert(query2_used==true);
     assert(uf.groups==1);
 }
