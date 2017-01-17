@@ -2,10 +2,11 @@
 #include "./constraints.hpp"
 #include <cassert>
 #include <vector>
+#include <iostream>
 
 int main(){
     registerValidation();
-    int N =  inf.readInt(MIN_N, MAX_N);
+    int N = inf.readInt(MIN_N, MAX_N);
     inf.readEoln();
 
     std::vector<int> T(N);
