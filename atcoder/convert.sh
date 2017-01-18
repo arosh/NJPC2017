@@ -1,5 +1,8 @@
 #!/bin/bash
 set -ue
+
+./copy.sh
+
 arr="A B C D E F G H"
 DIR=$PWD
 for x in $arr; do
