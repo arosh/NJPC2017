@@ -7,6 +7,6 @@
 cxx_solution(
     src='main.cc',
     flags=['-O2', '-std=c++11'],
-    challenge_cases=['50_random_large_02.in'])
+    challenge_cases=['50_random_Xilarge_02.in'])
 #java_solution(src='Main.java', encoding='UTF-8', mainclass='Main')
 #script_solution(src='main.py')
