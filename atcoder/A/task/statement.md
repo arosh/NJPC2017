@@ -7,7 +7,7 @@
 
 NJPCの正式名称は「Nara institute of science and technology & Japan institute of science and technology Programming Contest」というのですが、いかんせん長すぎます。
 
-そこで、あなたに長過ぎる文字列は初めの $L$ 文字のみを表示するプログラムの作成をお願いしたいのです。
+そこであなたに、長過ぎる文字列は初めの $L$ 文字のみを表示するプログラムの作成をお願いしたいのです。
 
 
 問題文
