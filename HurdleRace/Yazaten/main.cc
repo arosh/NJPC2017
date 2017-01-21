@@ -47,11 +47,7 @@ int main(){
             return 0;
         }
     }
-    if(seg[seg.size()-1].second<l){
-        cout<<"YES"<<endl;
-        return 0;
-    }
-    if(seg[0].second-l-1<0){
+    if(seg.size()>=2 && seg[1].first-1-2*l<0){
         cout<<"NO"<<endl;
         return 0;
     }
