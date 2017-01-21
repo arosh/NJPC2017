@@ -48,6 +48,10 @@ $N≥1$ のとき、$2$ 行目から $N+1$ 行目の各行には、'x' マーク
 
 {sample 00_sample_00}
 
+!![図1: 入力例1](https://atcoder.jp/img/njpc2017/bd153353db38f22885115ed249804d80.png)
+
 {sample 00_sample_01}
+
+!![図2: 入力例2](https://atcoder.jp/img/njpc2017/3c669ce669718ce58054d3288d127786.png)
 
 {sample 00_sample_02}
