@@ -28,11 +28,11 @@ int main(int argc, char * argv[])
 {
     setName("check if the score of participant's answer is exactly K");
 
-    // registerTestlibCmd(argc, argv);
-    // 引数の順番やら何やらが違うので以下を使う
-    inf.init(argv[2], _input);
-    ans.init(argv[4], _answer);
-    ouf.init(argv[6], _output);
+    registerTestlibCmd(argc, argv);
+    // // 引数の順番やら何やらが違うので以下を使う
+    // inf.init(argv[2], _input);
+    // ans.init(argv[4], _answer);
+    // ouf.init(argv[6], _output);
 
     int N = inf.readInt();
     inf.readSpace();

@@ -31,7 +31,7 @@ rename 's/\.diff$/\.out/' ./C/out/*.diff
 cp ../NMPuzzle/rime-out/tests/*.in ./D/in
 cp ../NMPuzzle/rime-out/tests/*.diff ./D/out
 rename 's/\.diff$/\.out/' ./D/out/*.diff
-cp ../NMPuzzle/tests/judge.cc ./D/etc/output_checker.cpp
+# cp ../NMPuzzle/tests/judge.cc ./D/etc/output_checker.cpp
 
 cp ../SparselyPopulatedRegions/rime-out/tests/*.in ./E/in
 cp ../SparselyPopulatedRegions/rime-out/tests/*.diff ./E/out
@@ -40,7 +40,7 @@ rename 's/\.diff$/\.out/' ./E/out/*.diff
 cp ../MixedDoubles/rime-out/tests/*.in ./F/in
 cp ../MixedDoubles/rime-out/tests/*.diff ./F/out
 rename 's/\.diff$/\.out/' ./F/out/*.diff
-cp ../MixedDoubles/tests/judge.cc ./F/etc/output_checker.cpp
+# cp ../MixedDoubles/tests/judge.cc ./F/etc/output_checker.cpp
 
 cp ../CommutativeLaw/rime-out/tests/*.in ./G/in
 cp ../CommutativeLaw/rime-out/tests/*.diff ./G/out

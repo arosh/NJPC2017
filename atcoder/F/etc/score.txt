@@ -1,2 +1,3 @@
 Sample (0): in0*
-All (800): *
+Small (600): 
+All (200): *

@@ -54,7 +54,7 @@ class MyExtension(Extension):
 							new_lines.append(u'{} {}'.format(t, sample_id))
 							new_lines.append('-' * 8)
 							new_lines.append('~' * 3)
-							
+
 							extensions = ['','.txt','.' + d]
 							error_message = ''
 							for extension in extensions:
@@ -67,7 +67,7 @@ class MyExtension(Extension):
 									error_message += str(e) + '\n'
 							else:
 								s = error_message
-							
+
 							new_lines += s.split('\n')[:-1]
 							new_lines.append('~' * 3)
 							new_lines.append('')
@@ -96,7 +96,7 @@ class MyExtension(Extension):
 					else:
 						new_lines.append(line)
 				return new_lines
-		
+
 		# sample: {score} => (MaxPoint) or {score subtask1 subtask2} => (sum of subtask1 and subtask2's points)
 		# TODO: 実は{scoreAll}みたいなのでも動いちゃうので修正すること。これは後で{scorepiyo}みたいな拡張を作る時に困るかも。場合分けすると記述量が増えるから嫌だった。
 		class ScorePreprocessor(Preprocessor):
@@ -121,7 +121,7 @@ class MyExtension(Extension):
 										scorepart = score_m.group(2)
 										if view_totalscore_flag or namepart in tasknames:
 											tasknames.discard(namepart)
-											scores.append(int(scorepart)) 
+											scores.append(int(scorepart))
 							if tasknames:
 								for taskname in tasknames:
 									error_message += "taskname '{}' is not found.".format(taskname)
@@ -129,10 +129,10 @@ class MyExtension(Extension):
 							line = re.sub(r'\{score\s?.*?\}', str(sum(scores)), line)
 						except Exception as e:
 							line = re.sub(r'\{score\s?.*?\}', str(error_message), line )
-						
+
 					new_lines.append(line)
 				return new_lines
-				
+
 		def add(p):
 			md.preprocessors.add(p.__name__, p(md), '>normalize_whitespace')
 		add(SamplePreprocessor)
@@ -188,7 +188,7 @@ def convert(html):
 def conv_encoding(filename):
 	with open(filename) as f:
 		data = f.read()
-	
+
 	lookup = ('utf_8', 'euc_jp', 'euc_jis_2004', 'euc_jisx0213',
 			'shift_jis', 'shift_jis_2004','shift_jisx0213',
 			'iso2022jp', 'iso2022_jp_1', 'iso2022_jp_2', 'iso2022_jp_3',
