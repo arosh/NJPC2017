@@ -5,21 +5,22 @@ using namespace std;
 #define rep(i,n) for (int i=0;i<(n);i++)
 #define all(a) (a).begin(),(a).end()
 
+// AC: ジャンプと着地の位置は地上扱い
+
 // 部分点 DP
 
 /*
     bool dp[i] = (位置 x = i でジャンプできる状態であるとき、x > i のハードルを全て飛び越すことができるか？)
 
-    max(x_i) < i のとき:
+    max(x_j) < i のとき:
         dp[i] = true
-    i <= max(x_i) のとき:
-        dp[i] = ((empty(i - 1, j) && dp[j]) または (empty(i - 1, j) && empty(j + L, j + 2L) && dp[j + 2L])) なる j >= i が存在すればtrue, そうでなければfalse
+    i <= max(x_j) のとき:
+        dp[i] = ((empty[i, j] && dp[j]) または (empty[i, j] && empty[j + L, j + 2L] && dp[j + 2L])) なる j >= i が存在すればtrue, そうでなければfalse
 
-    ただし、empty(l, r) := (l < x < rの範囲にハードルが存在しなければtrue, そうでなければfalse)
-    x=iにハードルがあればx=iでジャンプしなければならないことに注意(dp[i]の定義より、そのようなハードルはまだ飛んでいない)
+    ただし、empty[l, r] := l <= x <= r の範囲にハードルが存在しなければtrue, そうでなければfalse
 
     状態数O(max(x_i)), 一つの状態に対して遷移がO(max(x_i))通り
-    empty(l, r)は累積和を用いてO(1)で判定できる
+    empty[l, r]は累積和を用いてO(1)で判定できる
     全体でO(max(x_i)^2)
 */
 
@@ -31,9 +32,9 @@ int S[MAX_Xi];
 bool dp[MAX_Xi];
 bool visited[MAX_Xi];
 
-// (l, r)
+// [l, r]
 bool empty(int l, int r) {
-    l++;
+    r++;
     if (l >= r) return true;
     return S[l] - S[r] == 0;
 }
@@ -43,11 +44,11 @@ bool f(int i) {
     if (visited[i]) return dp[i];
     visited[i] = true;
     for (int j = i; j <= ma_x; ++j) {
-        // cerr << i << " " << j << " " << empty(i - 1, j) << " " << empty(j + L, j + 2 * L) << " " << endl;
+        if (!empty(i, j)) break;
         // ジャンプしないとき
-        dp[i] |= (empty(i - 1, j) && f(j));
+        dp[i] |= f(j);
         // ジャンプするとき
-        dp[i] |= (empty(i - 1, j) && empty(j + L, j + 2 * L) && f(j + 2 * L));
+        dp[i] |= empty(j + L, j + 2 * L) && f(j + 2 * L);
     }
     return dp[i];
 }
@@ -61,30 +62,9 @@ int main() {
         S[x]++;
     }
 
-
     for (int i = ma_x; i >= 0; --i) {
         S[i] += S[i + 1];
     }
 
-    // rep(i, 2 * ma_x) {
-    //     cerr << S[i] << " ";
-    // }
-    // cerr << endl;
-    //
     cout << (f(0) ? "YES" : "NO") << endl;
-    //
-    // rep(i, 2 * ma_x) {
-    //     cerr << dp[i] << " ";
-    // }
-    // cerr << endl;
-    // rep(i, 2 * ma_x) {
-    //     cerr << visited[i] << " ";
-    // }
-    // cerr << endl;
-
-    // rep(i, 2 * ma_x) {
-    //     rep(j, 2 * ma_x) {
-    //         cerr << i << " " << j << " " << empty(i, j) << endl;
-    //     }
-    // }
 }

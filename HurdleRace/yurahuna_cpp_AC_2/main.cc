@@ -9,7 +9,7 @@ using namespace std;
 #define all(a) (a).begin(),(a).end()
 #define rall(a) (a).rbegin(),(a).rend()
 
-// AC: ジャンプと着地の位置は地上扱い
+// AC: 1つめのifとelse ifが逆だけど関係ない
 
 int main() {
     int N, L;
@@ -21,13 +21,12 @@ int main() {
     int p = 0;
     int l = x[0];
     for(; i < N - 1; i++) {
-        // cerr << i << ", " << p << ", " << l << endl;
-        if (x[i + 1] > max(x[i] + L, p + 2 * L)) {
+        if (x[i + 1] - l < L) {
+            continue;
+        }
+        else if (x[i + 1] > max(x[i] + L, p + 2 * L)) {
             p = max(x[i] + L, p + 2 * L);
             l = x[i + 1];
-        }
-        else if (x[i + 1] - l < L) {
-            continue;
         }
         else {
             break;
