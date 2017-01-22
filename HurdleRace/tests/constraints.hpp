@@ -5,6 +5,13 @@
 #define MIN_Xi 1
 #define MAX_Xi ((int)(1e9))
 
+#define MIN_N_PART 1
+#define MAX_N_PART 2000
+#define MIN_L_PART 1
+#define MAX_L_PART 2000
+#define MIN_Xi_PART 1
+#define MAX_Xi_PART 2000
+
 #define MIN_N_SMALL 1
 #define MAX_N_SMALL 10
 #define MIN_L_SMALL 1
