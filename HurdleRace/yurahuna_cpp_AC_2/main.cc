@@ -21,7 +21,7 @@ int main() {
     int p = 0;
     int l = x[0];
     for(; i < N - 1; i++) {
-        if (x[i + 1] - l < L) {
+        if (x[i + 1] - l < L - 1) {
             continue;
         }
         else if (x[i + 1] > max(x[i] + L, p + 2 * L)) {

@@ -26,7 +26,7 @@ int main() {
             p = max(x[i] + L, p + 2 * L);
             l = x[i + 1];
         }
-        else if (x[i + 1] - l < L) {
+        else if (x[i + 1] - l < L - 1) {
             continue;
         }
         else {
