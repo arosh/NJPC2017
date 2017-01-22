@@ -150,7 +150,7 @@ int main(){
             }
             if(valid)break;
         }
-        int L = min(MAX_L,x[0]);
+        int L = min(MAX_L,X[0]);
         if(X[0]>=L)X[0] = rnd.next(1,X[0]-1);
         output(N, L, X, "50_random_x1small", case_num);
     }
@@ -171,7 +171,7 @@ int main(){
             }
             if(valid)break;
         }
-        int L = min(MAX_L_PART,x[0]);
+        int L = min(MAX_L_PART,X[0]);
         if(X[0]>=L)X[0] = rnd.next(1,X[0]-1);
         output(N, L, X, "50_random_x1small_part", case_num);
     }
