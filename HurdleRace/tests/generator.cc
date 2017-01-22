@@ -1,20 +1,3 @@
-Skip to content
-This repository
-Search
-Pull requests
-Issues
-Gist
- @yurahuna
- Unwatch 5
-  Star 1
-  Fork 0 Yazaten/NJPC2017 Private
- Code  Issues 9  Pull requests 0  Projects 0  Wiki  Pulse  Graphs
-Branch: master Find file Copy pathNJPC2017/HurdleRace/tests/generator.cc
-f360651  16 minutes ago
-@Yazaten Yazaten ハードル走のgeneratorで部分点ケースも生成するように変更した
-1 contributor
-RawBlameHistory
-179 lines (153 sloc)  5.3 KB
 #include <iostream>
 #include <utility>
 #include "./testlib.h"
@@ -193,5 +176,3 @@ int main(){
         output(N, L, X, "50_random_x1small_part", case_num);
     }
 }
-Contact GitHub API Training Shop Blog About
-© 2017 GitHub, Inc. Terms Privacy Security Status Help
