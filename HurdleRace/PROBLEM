@@ -7,6 +7,6 @@
 ##   time_limit: The time limit of this problem in seconds.
 problem(title = "HurdleRace",
         id = "C",
-        reference_solution = 'yurahuna_cpp_AC',
+        reference_solution = 'yurahuna_cpp_0123',
         time_limit = 2.0,
         )

@@ -35,6 +35,7 @@ bool visited[MAX_Xi];
 
 // (l, r]
 bool empty(int l, int r) {
+    l++;
     r++;
     if (l >= r) return true;
     return S[l] - S[r] == 0;
