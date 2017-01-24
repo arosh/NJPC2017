@@ -55,8 +55,12 @@ $query_Q$
 
 `2 u v`というフォーマットのクエリに対する答えを，クエリが与えられた順にそれぞれ 1 行ずつ出力せよ。
 
-{sample 0_000}
-色 $1$,$3$,$4$ の $3$ 種類です。
+{sample 00_sample_00}
 
-{sample 0_001}
-色 $3$,$33$ の $2$ 種類です。
+{sample 00_sample_01}
+
+{sample 00_sample_02}
+
+{sample 00_sample_03}
+
+{sample 00_sample_04}
