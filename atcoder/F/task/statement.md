@@ -51,10 +51,10 @@ $T_N$ $X_N$
 
 2人がすべてのボールを打ち返すための速さの上限 $V$ の最小値を出力せよ。絶対誤差または相対誤差が $10^{−6}$ 以下ならば正解となる。
 
-{sample in01}
+{sample 00_sample_00}
 
-{sample in02}
+{sample 00_sample_01}
 
-{sample in03}
+{sample 00_sample_02}
 
-{sample in04}
+{sample 00_sample_03}
