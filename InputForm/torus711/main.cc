@@ -1,3 +1,8 @@
+// Problem : InputForm
+// Author : torus711
+// Expected : AC
+// Complexity : O( |S| )
+
 #include <iostream>
 #include <iomanip>
 #include <sstream>
