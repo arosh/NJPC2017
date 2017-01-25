@@ -5,7 +5,7 @@
 - [入力フォーム](https://docs.google.com/document/d/19D05J1jkpsrmkM-rlEycBghJuxrmvLnNjvYQdRjrf84/edit)
 - [格子グラフ](https://docs.google.com/document/d/1BKDM_kPxEEoDTAIuGtP4pZrnf976SBdmQzzXFmMyyjc/edit)
 - [ハードル走](https://docs.google.com/document/d/1FrqUIT74mWlvBBT1Ry_oGTyHiSCB_vNnYfOVPdkpzG0/edit)
-- [NMパズルの2次元転倒数](https://docs.google.com/document/d/1xLL57jtmqnaa3h1QmdB08RqXOK0JcnWHzBq_bdagW1Y)
+- [NMパズルの2次元転倒数](https://docs.google.com/document/d/1zRuSY_w-m2Sj22d_fLyeKqrQ7p9H15TcQOACwWsW3-s/edit)
 - [限界集落](https://docs.google.com/document/d/1mrxwh-f7gjtzZFPbpYradis1OwmLfjL6FoiTArFXTZo/edit)
 - [ダブルス](https://docs.google.com/document/d/1yAux1E_mpJnIsyM7pjLy69To_zbMC8FsdsxNE1epxuM/edit)
 - [交換法則](https://docs.google.com/document/d/1sh3O9Qmw8maoTecLE94lXz-iQCalAAmo0W6SagdnzGs/edit)
