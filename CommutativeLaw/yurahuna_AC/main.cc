@@ -22,19 +22,15 @@ bool update(vector<int>& a) {
 	map<vector<int>, int> mp;
 	vector<vector<int>> vv;
 	vector<int> v;
-
-	// "00" -> -1, "000" -> -2, ...とする
+	int j = 0;
 	rep(i, n) {
-		if (i != 0 && a[i - 1] == 0 && a[i] == 0) {
-			v[0]--;
-		} else {
-			if (v.size() > 1 && a[i] == 0) {
-				mp[v] = 0;
-				vv.emplace_back(v);
-				v.clear();
-			}
-			v.emplace_back(a[i]);
+		// 0の先頭で毎回分ける
+		if (i != 0 && a[i] == 0) {
+			mp[v] = 0;
+			vv.emplace_back(v);
+			v.clear();
 		}
+		v.emplace_back(a[i]);
 	}
 	mp[v] = 0;
 	vv.emplace_back(v);
@@ -56,9 +52,9 @@ bool update(vector<int>& a) {
 	return ret;
 }
 
-// 連続する0を潰す解法
+// 連続する0を潰さない解法
 // (文字を辞書順に0, 1, 2, ...に変換して考える)
-// a = {0}となったら終了
+// すべて0になったら終了
 signed main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(0);
@@ -85,6 +81,6 @@ signed main() {
 			;
 		}
 
-		cout << (a == vector<int>{0} ? "Yes" : "No") << endl;
+		cout << (count(all(a), 0) == a.size() ? "Yes" : "No") << endl;
 	}
 }

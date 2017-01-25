@@ -5,7 +5,7 @@ using namespace std;
 #define rep2(i,a,b) for (int i=(a);i<(b);i++)
 
 const int inf = 1<<30;
-const int MAX_N = 1001;
+const int MAX_N = 3001;
 bool dp[MAX_N][MAX_N]; // dp[l, r) = S[l, r)を構築可能か？
 bool visited[MAX_N][MAX_N];
 int order[MAX_N][MAX_N]; // order[l][k] = S[l, k)<=S[k, r)なる最小のr

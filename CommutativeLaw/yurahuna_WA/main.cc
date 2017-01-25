@@ -15,6 +15,8 @@ using namespace std;
 #define printP(_p) cout << _p.first << " " << _p.second << endl
 #define printVP(_vp) for(auto _p : _vp) printP(_p);
 
+// これは嘘
+
 bool update(vector<int>& a) {
 	// 先頭が0でなければダメ
 	if (a[0] != 0) return false;
@@ -22,15 +24,19 @@ bool update(vector<int>& a) {
 	map<vector<int>, int> mp;
 	vector<vector<int>> vv;
 	vector<int> v;
-	int j = 0;
+
+	// "00" -> -1, "000" -> -2, ...とする
 	rep(i, n) {
-		// 0の先頭で毎回分ける
-		if (i != 0 && a[i] == 0) {
-			mp[v] = 0;
-			vv.emplace_back(v);
-			v.clear();
+		if (i != 0 && a[i - 1] == 0 && a[i] == 0) {
+			v[0]--;
+		} else {
+			if (v.size() > 1 && a[i] == 0) {
+				mp[v] = 0;
+				vv.emplace_back(v);
+				v.clear();
+			}
+			v.emplace_back(a[i]);
 		}
-		v.emplace_back(a[i]);
 	}
 	mp[v] = 0;
 	vv.emplace_back(v);
@@ -52,9 +58,9 @@ bool update(vector<int>& a) {
 	return ret;
 }
 
-// 連続する0を潰さない解法
+// 連続する0を潰す解法
 // (文字を辞書順に0, 1, 2, ...に変換して考える)
-// すべて0になったら終了
+// a = {0}となったら終了
 signed main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(0);
@@ -81,6 +87,6 @@ signed main() {
 			;
 		}
 
-		cout << (count(all(a), 0) == a.size() ? "Yes" : "No") << endl;
+		cout << (a == vector<int>{0} ? "Yes" : "No") << endl;
 	}
 }
