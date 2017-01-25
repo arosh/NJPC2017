@@ -1,86 +1,55 @@
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
 
 #define rep(i,n) for (int i=0;i<(n);i++)
 #define rep2(i,a,b) for (int i=(a);i<(b);i++)
-#define rrep(i,n) for (int i=(n)-1;i>=0;i--)
-#define rrep2(i,a,b) for (int i=(a)-1;i>=b;i--)
-#define all(a) (a).begin(),(a).end()
-#define rall(a) (a).rbegin(),(a).rend()
 
-// デバッグ用
-#define printV(_v) for(auto _x:_v){cout<<_x<<" ";}cout<<endl
-#define printVS(_vs) for(auto _x : _vs){cout << _x << endl;}
-#define printVV(_vv) for(auto _v:_vv){for(auto _x:_v){cout<<_x<<" ";}cout<<endl;}
-#define printP(_p) cout << _p.first << " " << _p.second << endl
-#define printVP(_vp) for(auto _p : _vp) printP(_p);
+const int inf = 1<<30;
+const int MAX_N = 1001;
+bool dp[MAX_N][MAX_N]; // dp[l, r) = S[l, r)を構築可能か？
+bool visited[MAX_N][MAX_N];
+int order[MAX_N][MAX_N]; // order[l][k] = S[l, k)<=S[k, r)なる最小のr
+string s;
 
-bool update(vector<int>& a) {
-	// 先頭が0でなければダメ
-	if (a[0] != 0) return false;
-	int n = a.size();
-	map<vector<int>, int> mp;
-	vector<vector<int>> vv;
-	vector<int> v;
-	int j = 0;
-	rep(i, n) {
-		// 0の先頭で毎回分ける
-		if (i != 0 && a[i] == 0) {
-			mp[v] = 0;
-			vv.emplace_back(v);
-			v.clear();
-		}
-		v.emplace_back(a[i]);
-	}
-	mp[v] = 0;
-	vv.emplace_back(v);
-
-	{
-		int i = 0;
-		for (auto& p : mp) {
-			p.second = i++;
-		}
-	}
-
-	vector<int> b;
-	for (auto u : vv) {
-		b.emplace_back(mp[u]);
-	}
-
-	bool ret = (a != b);
-	a = b;
-	return ret;
+bool f(int l, int r) {
+    if (l >= r - 1) return true; // 1文字以下
+    if (visited[l][r]) return dp[l][r];
+    visited[l][r] = true;
+    for (int k = l + 1; k <= r; ++k) {
+        if (f(l, k) && f(k, r) && order[l][k] <= r) {
+            return dp[l][r] = true;
+        }
+    }
+    return false;
 }
 
-// 連続する0を潰さない解法
-// (文字を辞書順に0, 1, 2, ...に変換して考える)
-// すべて0になったら終了
 signed main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(0);
 
-	string s;
-	while (cin >> s) {
-		map<char, int> mp;
-		for (auto c : s) mp[c] = 0;
-		{
-			int i = 0;
-			for (auto& p : mp) {
-				p.second = i++;
-			}
-		}
-		int n = s.size();
-		vector<int> a(n);
-		rep(i, n) {
-			a[i] = mp[s[i]];
-		}
+    cin >> s;
+    int n = s.size();
 
-		// printV(a);
+    rep(l, n) {
+        rep2(k, l + 1, n) {
+            order[l][k] = inf;
+            rep2(r, k + 1, n + 1) {
+                if (s[l + r - 1 - k] > s[r - 1]) {
+                    break;
+                }
+                if (s[l + r - 1 - k] < s[r - 1] || r - k == k - l) {
+                    order[l][k] = r;
+                    break;
+                }
+            }
+        }
+    }
 
-		while (update(a)) {
-			;
-		}
+    // rep(l, n) {
+    //     rep2(k, l + 1, n + 1) {
+    //         cerr << l << ", " << k << ", " << order[l][k] << endl;
+    //     }
+    // }
 
-		cout << (count(all(a), 0) == a.size() ? "Yes" : "No") << endl;
-	}
+    cout << (f(0, s.size()) ? "Yes" : "No") << endl;
 }

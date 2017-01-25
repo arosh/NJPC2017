@@ -7,6 +7,6 @@
 ##   time_limit: The time limit of this problem in seconds.
 problem(title = "CommutativeLaw",
         id = "Z",
-        reference_solution = 'yurahuna_AC',
-        time_limit = 1.0,
+        reference_solution = 'yurahuna_AC_2',
+        time_limit = 2.0,
         )

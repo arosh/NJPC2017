@@ -29,34 +29,15 @@ int main(){
     // pidを足すことで、1秒以上間を置かずに起動したときに同じシードになってしまうのを防ぐ
     rnd.setSeed(time(0)+getpid());
 
-    #define NUM_CASE 100
+    const int NUM_CASES = 200;
 
-    // Xiの大きいケース(普通のランダムケース)をNUM_CASE個生成
-    for(int case_num = 0; case_num < NUM_CASE; ++case_num){
-        int N = rnd.next(MIN_N, MAX_N);
-        int L = rnd.next(MIN_L, MAX_L);
-        vector<int> X(N);
-        while(1){
-            for(int i=0;i<N;i++){
-                X[i] = rnd.next(MIN_Xi, MAX_Xi);
-            }
-            sort(X.begin(),X.end());
-            bool valid = true;
-            for(int j=0;j<X.size()-1;j++){
-                if(X[j]==X[j+1])valid = false;
-            }
-            if(valid)break;
-        }
-        output(N, L, X, "50_random_Xilarge", case_num);
-    }
+    // 部分点ケースのみ生成
 
-
-    // Xi,Nの小さいケースをNUM_CASE個生成
-    vector<int> numbers(MAX_Xi_SMALL);
-    for(int i=0;i<numbers.size();i++)numbers[i]=i+1;
-    for(int case_num = 0; case_num < NUM_CASE; ++case_num){
-        int N = rnd.next(MIN_N, MAX_N_SMALL);
-        int L = rnd.next(MIN_L, MAX_L);
+    //部分点
+    // ランダムケース(MAX_N_SMALL,MAX_L_PART,MAX_Xi_PART)
+    for(int case_num = 0; case_num < NUM_CASES; ++case_num){
+        int N = rnd.next(MIN_N_PART, MAX_N_PART);
+        int L = rnd.next(MIN_L_PART, MAX_L_PART);
         shuffle(numbers.begin(),numbers.end());
 
         vector<int> X(N);
@@ -65,34 +46,14 @@ int main(){
         }
         sort(X.begin(),X.end());
 
-        output(N, L, X, "50_random_XiNsmall", case_num);
+        output(N, L, X, "50_random_XiNsmall_part", case_num);
 
     }
 
-
-    // Xiが大きく、LがきわどいケースをNUM_CASE個生成
-    for(int case_num = 0; case_num < NUM_CASE; ++case_num){
-        int N = rnd.next(MIN_N, MAX_N);
-        vector<int> X(N);
-        while(1){
-            for(int i=0;i<N;i++){
-                X[i] = rnd.next(MIN_Xi, MAX_Xi);
-            }
-            sort(X.begin(),X.end());
-            bool valid = true;
-            for(int j=0;j<X.size()-1;j++){
-                if(X[j]==X[j+1])valid = false;
-            }
-            if(valid)break;
-        }
-        int L = X[rnd.next(0, (int)X.size()-1)]+rnd.next(0,2);
-        output(N, L, X, "50_random_Xilarge_narrow", case_num);
-    }
-
-
-    // Xi,Nが小さく、LがきわどいケースをNUM_CASE個生成
-    for(int case_num = 0; case_num < NUM_CASE; ++case_num){
-        int N = rnd.next(MIN_N, MAX_N_SMALL);
+    //部分点
+    // Lがきわどいケース(MAX_N_SMALL,MAX_L_PART,MAX_Xi_PART)
+    for(int case_num = 0; case_num < NUM_CASES; ++case_num){
+        int N = rnd.next(MIN_N_SMALL, MAX_N_SMALL);
         shuffle(numbers.begin(),numbers.end());
 
         vector<int> X(N);
@@ -101,43 +62,38 @@ int main(){
         }
         sort(X.begin(),X.end());
 
-        int L = X[rnd.next(0, (int)X.size()-1)]+rnd.next(0,2);
-        output(N, L, X, "50_random_XiNsmall_narrow", case_num);
+        int L = min(MAX_L_PART,X[rnd.next(0, (int)X.size()-1)]+rnd.next(0,2));
+        output(N, L, X, "50_random_XiNsmall_narrow_part", case_num);
     }
 
-
-    // N,Lの小さいケースをNUM_CASE個生成
-    for(int case_num = 0; case_num < NUM_CASE; ++case_num){
-        int N = rnd.next(MIN_N, MAX_N_SMALL);
-        int L = rnd.next(MIN_L, MAX_L_SMALL);
+    //部分点
+    // N,Lの小さいケース(MAX_N_SMALL,MAX_L_PART,MAX_L_PART)
+    for(int case_num = 0; case_num < NUM_CASES; ++case_num){
+        int N = rnd.next(MIN_N_SMALL, MAX_N_SMALL);
+        int L = rnd.next(MIN_L_PART, MAX_L_PART);
         shuffle(numbers.begin(),numbers.end());
 
         vector<int> X(N);
         for(int i=0;i<N;i++)X[i] = numbers[i];
         sort(X.begin(),X.end());
 
-        output(N, L, X, "50_random_NLsmall", case_num);
+        output(N, L, X, "50_random_NLsmall_part", case_num);
 
     }
 
+    //部分点
+    // X1<Lのケース(MAX_N_PART,MAX_L_PART,MAX_Xi_PART)
+    for(int case_num = 0; case_num < NUM_CASES; ++case_num){
+        int N = rnd.next(MIN_N_PART, MAX_N_PART);
+        int L = rnd.next(MIN_L_PART, MAX_L_PART);
+        shuffle(numbers.begin(),numbers.end());
 
-    // X1<LのケースをNUM_CASE個生成
-    for(int case_num = 0; case_num < NUM_CASE; ++case_num){
-        int N = rnd.next(MIN_N, MAX_N);
-        int L = rnd.next(MIN_L+1, MAX_L);
         vector<int> X(N);
-        while(1){
-            for(int i=0;i<N;i++){
-                X[i] = rnd.next(MIN_Xi,MAX_Xi);
-            }
-            sort(X.begin(),X.end());
-            bool valid = true;
-            for(int j=0;j<X.size()-1;j++){
-                if(X[j]==X[j+1])valid = false;
-            }
-            if(valid)break;
-        }
-        if(X[0]>=L)X[0] = rnd.next(1,X[0]-1);
-        output(N, L, X, "50_random_x1small", case_num);
+        for(int i=0;i<N;i++)X[i] = numbers[i];
+        sort(X.begin(),X.end());
+
+        if(X[0]>L)L = min(MAX_L_PART,rnd.next(1,X[0]));
+
+        output(N, L, X, "50_random_x1small_part", case_num);
     }
 }
