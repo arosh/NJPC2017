@@ -13,8 +13,8 @@
 <p>ここで、転倒数は以下のように定義される。</p>
 <p><var>C_{ij}</var> は盤面の <var>i</var> 行 <var>j</var> 列目のマスに配置するカードに書かれた整数を表す。ただし、左上を <var>1</var> 行 <var>1</var> 列目、右下を <var>N</var> 行 <var>M</var> 列目とする。</p>
 <ul>
-<li>行 <var>i (1 ≦ i ≦ N)</var> の転倒数とは、 <var>1 ≦ j &lt; j’ ≦ M</var> かつ <var>C_{ij} &lt; C_{ij’}</var> を満たす組 <var>(j, j’)</var> の個数である。</li>
-<li>列 <var>j (1 ≦ j ≦ M)</var> の転倒数とは、 <var>1 ≦ i &lt; i’ ≦ N</var> かつ <var>C_{ij} &lt; C_{i’j}</var> を満たす組 <var>(i, i’)</var> の個数である。</li>
+<li>行 <var>i (1 ≦ i ≦ N)</var> の転倒数とは、 <var>1 ≦ j &lt; j’ ≦ M</var> かつ <var>C_{ij} &gt; C_{ij’}</var> を満たす組 <var>(j, j’)</var> の個数である。</li>
+<li>列 <var>j (1 ≦ j ≦ M)</var> の転倒数とは、 <var>1 ≦ i &lt; i’ ≦ N</var> かつ <var>C_{ij} &gt; C_{i’j}</var> を満たす組 <var>(i, i’)</var> の個数である。</li>
 </ul>
 </section>
 </div>
@@ -72,8 +72,8 @@
 
 <div class="part">
 <section>
-<h3>出力例 1</h3><pre>3 2 1
-5 6 4
+<h3>出力例 1</h3><pre>6 1 4
+2 5 3
 </pre>
 
 <p>このように配置すると、転倒数は1行目が2, 2行目が1, 1列目が1, 2列目が0, 3列目が1となるため、スコアは5となり条件を満たす。</p>
