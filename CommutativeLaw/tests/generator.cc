@@ -41,21 +41,24 @@ void gen_random( ostream & out, const int min_l, const int max_l, const char min
 
 void gen_fibonacci( ostream &out,
 		const int min_l, const int max_l,
-		const char a = 'a', const char b = 'b' )
+		const char a = 'a', const char b = 'b', const char c = 'c' )
 {
 	const int L = rng.next( min_l, max_l );
 
-	string S1( 1, a ), S2( 1, b ), S3;
+	string S1( 1, b ), S2( 1, c ), S3 = S1 + S2;
+	string res;
+	res += a + S1 + a + S2 + a + S3;
 
-	while ( S1.size() + S2.size() <= L )
+	while ( res.size() + 1 + S1.size() + S2.size() <= L )
 	{
 		const string &&S = S1 + S2;
 		S1 = S2;
 		S2 = S3;
 		S3 = S;
+		res += a + S3;
 	}
 
-	out << S3 << endl;
+	out << res << endl;
 
 	return;
 }
@@ -96,7 +99,7 @@ int main()
 		for ( int i = 0; i < 10; ++i )
 		{
 			ofstream out( fname() );
-			gen_fibonacci( out, MAX_L, MAX_L, rng.next( 'a', 'z' ), rng.next( 'a', 'z' ) );
+			gen_fibonacci( out, MAX_L - 100, MAX_L, rng.next( 'a', 'g' ), rng.next( 'h', 'z' ), rng.next( 'h', 'z' ) );
 		}
 	}
 
