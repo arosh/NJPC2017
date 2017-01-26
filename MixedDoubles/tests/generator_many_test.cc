@@ -40,7 +40,7 @@ int main(){
         int t = 0;
 
         const int max_n = (t ? MAX_N : MAX_N_small);
-        const int NUM_CASES = 100;
+        const int NUM_CASES = 1000;
 
         // 乱数ケースを10個生成
         for(int i = 0; i < NUM_CASES; ++i){
