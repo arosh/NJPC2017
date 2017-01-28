@@ -30,7 +30,7 @@ struct FileName
 void gen_random( ostream & out, const int min_l, const int max_l, const char min_c = 'a', const char max_c = 'z' )
 {
 	const int L = rng.next( min_l, max_l );
-	
+
 	string S;
 	generate_n( back_inserter( S ), L, [&]{ return rng.next( min_c, max_c ); } );
 
