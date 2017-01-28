@@ -27,7 +27,8 @@ int maxK(int N, int M) {
 int main(){
     // 乱数のシードを設定
     // pidを足すことで、1秒以上間を置かずに起動したときに同じシードになってしまうのを防ぐ
-    rnd.setSeed(time(0)+getpid());
+    // rnd.setSeed(time(0)+getpid());
+    rnd.setSeed(711);
 
     // 乱数ケースを10個生成
     for(int i = 0; i < 10; ++i){

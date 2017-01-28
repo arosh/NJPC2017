@@ -1,2 +1,3 @@
 Sample (0): 00_*
-All (500): *
+Small (400): *_part_*
+All (100): *

@@ -171,8 +171,8 @@ void coloringTreeAlternately(const vector<int>& p, vector<int>& C) {
 int main(){
     // 乱数のシードを設定
     // pidを足すことで、1秒以上間を置かずに起動したときに同じシードになってしまうのを防ぐ
-    rnd.setSeed(time(0)+getpid());
-    // rnd.setSeed(711);
+    // rnd.setSeed(time(0)+getpid());
+    rnd.setSeed(711);
 
     /*
     // 検証用

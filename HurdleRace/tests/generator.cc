@@ -27,7 +27,8 @@ void output(int a, int b, vector<int> X, const string &prefix, int num){
 int main(){
     // 乱数のシードを設定
     // pidを足すことで、1秒以上間を置かずに起動したときに同じシードになってしまうのを防ぐ
-    rnd.setSeed(time(0)+getpid());
+    // rnd.setSeed(time(0)+getpid());
+    rnd.setSeed(711);
 
     // ランダムケース(MAX_N,MAX_L,MAX_Xi)
     for(int case_num = 0; case_num < 10; ++case_num){

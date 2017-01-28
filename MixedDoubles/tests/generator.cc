@@ -28,7 +28,8 @@ void output(int N, const set<int>& stT, const vector<int>& X, const string &pref
 int main(){
     // 乱数のシードを設定
     // pidを足すことで、1秒以上間を置かずに起動したときに同じシードになってしまうのを防ぐ
-    rnd.setSeed(time(0)+getpid());
+    // rnd.setSeed(time(0)+getpid());
+    rnd.setSeed(711);
 
     for (int t = 1; t >= 0; t--) {
         // t = 1: 満点ケース(1?_*)
