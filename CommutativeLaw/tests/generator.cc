@@ -63,6 +63,31 @@ void gen_fibonacci( ostream &out,
 	return;
 }
 
+void gen_dividing( ostream &out,
+		const int min_l, const int max_l )
+{
+	const int L = rng.next( min_l, max_l );
+
+	string S( 2, 'z' );
+	for ( char c = 'y'; 'a' <= c; --c )
+	{
+		for ( int i = int( S.size() ) - 1; 0 <= i; --i )
+		{
+			S.insert( i, 1, c );
+		}
+// 		assert( S.rfind( c ) != string::npos );
+		while ( L < S.size() )
+		{
+			S.erase( S.rfind( c ) );
+		}
+	}
+	
+	out << S << endl;
+					
+	return;
+}
+
+
 int main()
 {
 	rng.setSeed( 711 );
@@ -113,5 +138,16 @@ int main()
 		}
 	}
 
+	{ // recursive division
+		FileName fname( 6, "dividing" );
+		for ( int i = 0; i < 10; ++i )
+		{
+			ofstream out( fname() );
+			const char c = rng.next( 'a', 'z' );
+			gen_dividing( out, MAX_L - 50, MAX_L );
+		}
+	}
+
 	return 0;
 }
+
