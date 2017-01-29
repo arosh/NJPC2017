@@ -48,7 +48,7 @@ $x_N$
 
 ハードルに当たることなくすべてのハードルを飛び越えることができる場合は”YES”(ダブルクオーテーションは不要), そうでない場合は”NO”を出力せよ。
 
-{sample 00_sample_00}
+{sample 00_sample_part_00}
 
 !![図1: 入力例1での飛び方の例](https://atcoder.jp/img/njpc2017/aea3f8b3343874c4117fffd60c998872.png)
 
@@ -59,25 +59,25 @@ $x_N$
 
 このケースは部分点の制約を満たす。
 
-{sample 00_sample_01}
+{sample 00_sample_part_01}
 どのようにジャンプしても位置 $x = 5$ のハードルを飛び越えることはできない。
 
 このケースは部分点の制約を満たす。
 
-{sample 00_sample_02}
+{sample 00_sample_part_02}
 たとえば原点でジャンプするとすべてのハードルを飛び越えることができる。
 
 このケースは部分点の制約を満たす。
 
-{sample 00_sample_03}
+{sample 00_sample_part_03}
 原点から負の方向に移動することはできない。
 
 このケースは部分点の制約を満たす。
 
-{sample 00_sample_04}
+{sample 00_sample_part_04}
 このケースは部分点の制約を満たす。
 
-{sample 00_sample_05}
+{sample 00_sample_part_05}
 このケースは部分点の制約を満たす。
 
 {sample 00_sample_06}
